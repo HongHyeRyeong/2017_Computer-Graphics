@@ -1,0 +1,20 @@
+- background
+1. objects
+2. grid
+3. ground
+
+- stage
+1. int numStage: 스테이지 번호
+2. int shapeCube[10][10][10]: 제한된 틀(0:empty, 1:채워지기 전(반투명), 2: 채워진 후(불투명))
+3. int numCube: 스테이지에 필요한 큐브들 수
+4. Cube* cube[numCube]
+5. Collision()
+6. float time: 게임 시간
+
+- cube
+1. int numStage: 스테이지 번호
+2. int numCube: 큐브들 번호
+3. int type: 움직?고정?
+
+- Key
+g/G: Grid On/Off
