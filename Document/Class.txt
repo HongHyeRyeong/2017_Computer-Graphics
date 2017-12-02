@@ -1,20 +1,33 @@
 - background
-1. objects
+1. planet
 2. grid
 3. ground
 
 - stage
-1. int numStage: 스테이지 번호
-2. int shapeCube[10][10][10]: 제한된 틀(0:empty, 1:채워지기 전(반투명), 2: 채워진 후(불투명))
-3. int numCube: 스테이지에 필요한 큐브들 수
-4. Cube* cube[numCube]
-5. Collision()
-6. float time: 게임 시간
+1. int numStage, numCube: 스테이지 번호, 해당 스테이지에 사용될 큐브의 총 수
+2. int map[10][10][10]: 빈곳, 고정된 곳, 채워진 곳 등...
+3. Cube* cube[10]: 해당 스테이지에 사용될 큐브(총 10개까지 가능)
+4. float timeStage: 게임 시간
 
 - cube
-1. int numStage: 스테이지 번호
-2. int numCube: 큐브들 번호
-3. int type: 움직?고정?
+1. int numStage, numCube: 스테이지 번호, 해당 스테이지에 사용될 큐브의 번호
+2. int type: Cube가 map에 고정됐는지, 이동가능한지
+3. bool cube[10][10][10]: 해당 좌표에 Cube가 있는지 없는지
 
 - Key
-g/G: Grid On/Off
+q: 게임 종료
+y: y축 회전
+u/U: Grid On/Off
+
+w: 선택한 Cube 바꾸기(왼쪽)
+e: 선택한 Cube 바꾸기(오른쪽)
+r: 선택한 Cube 고정
+t: 선택한 Cube 이동(default 값)
+
+a/z: 선택한 Cube x축 이동
+s/x: 선택한 Cube y축 이동
+d/c: 선택한 Cube z축 이동
+f: 선택한 Cube x축 회전
+g: 선택한 Cube y축 회전
+h: 선택한 Cube z축 회전
+
