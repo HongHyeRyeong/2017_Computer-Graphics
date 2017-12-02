@@ -1,6 +1,7 @@
 #include <GL/glut.h>
 #include <iostream>
 #include "Background.h"
+#include "Stage.h"
 
 GLvoid drawScene(GLvoid);
 GLvoid Reshape(int w, int h);
@@ -11,6 +12,9 @@ float traX, traY, traZ;
 float rotX{ 30 }, rotY, rotZ;
 
 Background* bg;
+Stage* stage;
+
+int selectNum;
 
 void main(int argc, char *argv[])
 {
@@ -27,6 +31,7 @@ void main(int argc, char *argv[])
 	glEnable(GL_DEPTH_TEST);
 
 	bg = new Background();
+	stage = new Stage(1);
 
 	glutMainLoop();
 
@@ -44,14 +49,17 @@ GLvoid drawScene(GLvoid)
 	glRotatef(rotY, 0.0f, 1.0f, 0.0f);
 	glRotatef(rotZ, 0.0f, 0.0f, 1.0f);
 
-	bg->updateBackground();
 	bg->drawBackground();
+	stage->drawStage();
 
 	glutSwapBuffers();
 }
 
 void TimerFunction(int value)
 {
+	bg->updateBackground();
+	stage->updateStage();
+
 	glutPostRedisplay();
 	glutTimerFunc(100, TimerFunction, 1);
 }
@@ -60,36 +68,34 @@ void Keyboard(unsigned char key, int x, int y)
 {
 	if (key == 'q')
 		exit(0);
-	else if (key == 'a')
-		traX -= 10;
-	else if (key == 'd')
-		traX += 10;
-	else if (key == 'w')
-		traY += 10;
-	else if (key == 's')
-		traY -= 10;
-	else if (key == '+')
-		traZ += 10;
-	else if (key == '-')
-		traZ -= 10;
-	else if (key == 'x')
-		rotX += 10;
+	else if (key == 'w') {
+		if (selectNum > 0) {
+			selectNum--;
+			stage->setSelectCube(selectNum);
+		}
+	}
+	else if (key == 'e') {
+		if (selectNum < stage->getNumCube() - 1) {
+			selectNum++;
+			stage->setSelectCube(selectNum);
+		}
+	}
+	else if (key == 'r')
+		stage->setCubeType(1);
+	else if (key == 't')
+		stage->setCubeType(0);
+	else if (key == 'a' || key == 'z' || key == 's' || key == 'x' || key == 'd' || key == 'c'||
+		key == 'f' || key == 'g' || key == 'h')
+		stage->Keyboard(key);
 	else if (key == 'y')
 		rotY += 10;
-	else if (key == 'z')
-		rotZ += 10;
-	else if (key == 'i') {
-		traX = 0;
-		traY = 0;
-		traZ = 0;
-		rotX = 30;
-		rotY = 0;
-		rotZ = 0;
-	}
-	else if (key == 'g')
+	else if (key == 'u')
 		bg->setGrid(true);
-	else if (key == 'G')
+	else if (key == 'U')
 		bg->setGrid(false);
+	else if (key == 'i') {
+		rotY = 0;
+	}
 }
 
 GLvoid Reshape(int w, int h)
@@ -101,7 +107,7 @@ GLvoid Reshape(int w, int h)
 	glLoadIdentity();
 
 	gluPerspective(60.0f, w / h, 1.0, 2000.0);
-	glTranslatef(5.0, -20.0, -300.0);
+	glTranslatef(5.0, -20.0, -200.0);
 
 	glMatrixMode(GL_MODELVIEW);
 	gluLookAt(0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0);

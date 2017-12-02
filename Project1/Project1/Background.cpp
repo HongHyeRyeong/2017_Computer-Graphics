@@ -16,9 +16,9 @@ void Background::drawBackground()
 	// Floor
 	glPushMatrix();
 	glTranslatef(0, 0, -60);
-	for (int i = 0; i < 10; ++i) {
+	for (int i = 0; i < 11; ++i) {
 		glTranslatef(-60, 0, 10);
-		for (int k = 0; k < 10; ++k) {
+		for (int k = 0; k < 11; ++k) {
 			glTranslatef(10, 0, 0);
 			glColor3f(1.0, 1.0, 1.0);
 			glBegin(GL_QUADS);
@@ -38,7 +38,7 @@ void Background::drawBackground()
 			glEnd();
 			glTranslatef(0, -0.2, 0);
 		}
-		glTranslatef(-40, 0, 0);
+		glTranslatef(-50, 0, 0);
 	}
 	glPopMatrix();
 
@@ -47,17 +47,17 @@ void Background::drawBackground()
 	{
 		glColor3f(0.8, 0.8, 0.8);
 
-		for (int i = 0; i < 6; ++i) {
+		for (int i = 1; i < 6; ++i) {
 			glPushMatrix();
 			if(i==1)
-				glTranslatef(0, 100, 0);
+				glTranslatef(0, 110, 0);
 			else if (i == 2) {
 				glRotatef(90.0, 1.0f, 0.0f, 0.0f);
-				glTranslatef(0, 45, -45);
+				glTranslatef(0, 55, -55);
 			}
 			else if (i == 3) {
 				glRotatef(90.0, 1.0f, 0.0f, 0.0f);
-				glTranslatef(0, -55, -45);
+				glTranslatef(0, -55, -55);
 			}
 			else if (i == 4) {
 				glRotatef(90.0, 0.0f, 0.0f, 1.0f);
@@ -65,13 +65,13 @@ void Background::drawBackground()
 			}
 			else if (i == 5) {
 				glRotatef(90.0, 0.0f, 0.0f, 1.0f);
-				glTranslatef(55, -45, 0);
+				glTranslatef(55, -55, 0);
 			}
 
 			glTranslatef(0, 0, -60);
-			for (int i = 0; i < 10; ++i) {
+			for (int i = 0; i < 11; ++i) {
 				glTranslatef(-60, 0, 10);
-				for (int k = 0; k < 10; ++k) {
+				for (int k = 0; k < 11; ++k) {
 					glTranslatef(10, 0, 0);
 					glBegin(GL_LINE_LOOP);
 					glVertex3f(-5.0, 0.0, -5.0);
@@ -80,7 +80,7 @@ void Background::drawBackground()
 					glVertex3f(5.0, 0.0, -5.0);
 					glEnd();
 				}
-				glTranslatef(-40, 0, 0);
+				glTranslatef(-50, 0, 0);
 			}
 			glPopMatrix();
 		}
