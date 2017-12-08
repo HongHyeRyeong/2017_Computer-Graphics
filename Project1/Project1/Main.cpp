@@ -29,6 +29,8 @@ void main(int argc, char *argv[])
 	glutTimerFunc(100, TimerFunction, 1);
 
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND); // 블렌딩 투명
+	glEnable(GL_CULL_FACE);
 
 	bg = new Background();
 	stage = new Stage(1);
