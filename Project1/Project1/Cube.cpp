@@ -8,6 +8,7 @@ Cube::Cube(int numStage, int numCube) : numStage(numStage), numCube(numCube)
 				cube[y][x][z] = 0;
 	type = 0;
 
+
 	if (numStage == 1)
 		Stage1();
 
@@ -41,8 +42,8 @@ void Cube::drawCube()
 			for (int z = 0; z < 11; ++z) {
 				if (cube[y][x][z] == 1) {
 					GLfloat vec[8][3]{
-						{ -5, 5, 5 },{ 5, 5, 5 }, { 5, 5, -5 },{ -5, 5, -5 },
-						{ -5, -5, 5 },{ -5, -5, -5 }, { 5, -5, -5 },{ 5, -5, 5 }
+						{ -5, 5, 5 },{ 5, 5, 5 },{ 5, 5, -5 },{ -5, 5, -5 },
+						{ -5, -5, 5 },{ -5, -5, -5 },{ 5, -5, -5 },{ 5, -5, 5 }
 					};
 
 					glEnable(GL_TEXTURE_2D);
@@ -399,7 +400,7 @@ GLubyte* Cube::LoadDIBitmap(const char *filename, BITMAPINFO **info)
 
 	if ((bitsize = (*info)->bmiHeader.biSizeImage) == 0)
 		bitsize = ((*info)->bmiHeader.biWidth *
-		(*info)->bmiHeader.biBitCount + 7) / 8.0 *
+			(*info)->bmiHeader.biBitCount + 7) / 8.0 *
 		abs((*info)->bmiHeader.biHeight);
 
 	if ((bits = (unsigned char *)malloc(bitsize)) == NULL) {

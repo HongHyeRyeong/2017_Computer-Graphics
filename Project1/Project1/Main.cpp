@@ -24,6 +24,10 @@ DWORD g_startTime = NULL;
 DWORD g_bulletTime = NULL;
 
 int selectNum;
+int saveNum1 = 0;
+int saveNum2 = 1;
+int saveNum3 = 2;
+
 
 void main(int argc, char *argv[])
 {
@@ -40,6 +44,31 @@ void main(int argc, char *argv[])
 	glutTimerFunc(100, TimerFunction, 1);
 
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND); // 블렌딩 투명
+
+						// 조명
+						/*
+						GLfloat DiffuseLight[] = { 1.0f, 1.0f, 1.0f, 0.0f };
+						GLfloat lightPos1[] = { -300, 300 , 300 ,0 }; //뒤
+						GLfloat lightPos2[] = { -300, 300 , -300 ,0 }; //앞
+
+
+						glEnable(GL_LIGHTING);
+						glEnable(GL_LIGHT0);
+						glEnable(GL_LIGHT1);
+
+						glLightfv(GL_LIGHT0, GL_DIFFUSE, DiffuseLight);
+						glLightfv(GL_LIGHT0, GL_POSITION, lightPos1);
+
+						glLightfv(GL_LIGHT1, GL_DIFFUSE, DiffuseLight);
+						glLightfv(GL_LIGHT1, GL_POSITION, lightPos2);
+
+						glEnable(GL_COLOR_MATERIAL);
+						glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+
+						glMateriali(GL_FRONT, GL_SHININESS, 128);
+						*/
+
 
 	bg = new Background();
 	stage = new Stage(1);
@@ -97,10 +126,29 @@ void Keyboard(unsigned char key, int x, int y)
 		}
 	}
 	else if (key == 'r')
+	{
 		stage->setCubeType(1);
+
+		if (saveNum1 == selectNum)
+		{
+			stage->savecube1(1);
+			stage->setSaveCube1(saveNum1);
+		}
+		if (saveNum2 == selectNum)
+		{
+			stage->savecube2(1);
+			stage->setSaveCube2(saveNum2);
+		}
+
+		if (saveNum3 == selectNum)
+		{
+			stage->savecube3(1);
+			stage->setSaveCube3(saveNum3);
+		}
+	}
 	else if (key == 't')
 		stage->setCubeType(0);
-	else if (key == 'a' || key == 'z' || key == 's' || key == 'x' || key == 'd' || key == 'c'||
+	else if (key == 'a' || key == 'z' || key == 's' || key == 'x' || key == 'd' || key == 'c' ||
 		key == 'f' || key == 'g' || key == 'h')
 		stage->Keyboard(key);
 	else if (key == 'u')
