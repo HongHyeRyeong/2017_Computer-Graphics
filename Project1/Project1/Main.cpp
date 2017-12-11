@@ -108,6 +108,7 @@ void Keyboard(unsigned char key, int x, int y)
 	else if (key == 'U')
 		bg->setGrid(false);
 	else if (key == 'i') {
+		rotX = 30;
 		rotY = 0;
 	}
 }
@@ -150,8 +151,8 @@ GLvoid Reshape(int w, int h)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
-	gluPerspective(60.0f, w / h, 1.0, 2000.0);
-	glTranslatef(5.0, -20.0, -200.0);
+	gluPerspective(60.0f, w / h, 1.0, 4000.0);
+	glTranslatef(0.0, -20.0, -230.0);
 
 	glMatrixMode(GL_MODELVIEW);
 	gluLookAt(0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0);

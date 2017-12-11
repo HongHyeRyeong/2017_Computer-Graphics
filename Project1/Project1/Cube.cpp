@@ -10,21 +10,110 @@ Cube::Cube(int numStage, int numCube) : numStage(numStage), numCube(numCube)
 
 	if (numStage == 1)
 		Stage1();
+
+
+	GLubyte *pBytes;
+	BITMAPINFO *info;
+
+	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, GL_MODULATE);
+	glEnable(GL_TEXTURE_2D);
+	glGenTextures(1, &cubeTexture);
+
+	glBindTexture(GL_TEXTURE_2D, cubeTexture);
+	pBytes = LoadDIBitmap("./Resource/cube.bmp", &info);
+	glTexImage2D(GL_TEXTURE_2D, 0, 3, 118, 118, 0, GL_BGR_EXT, GL_UNSIGNED_BYTE, pBytes);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, GL_MODULATE);
 }
 
 void Cube::drawCube()
 {
 	glPushMatrix();
 
-	glColor3f(0.4, 0.8, 1.0);
+	glColor3f(1.0, 1.0, 1.0);
 	glTranslatef(-50, 5, 50);
 
 	for (int y = 0; y < 11; ++y) {
 		for (int x = 0; x < 11; ++x) {
 			for (int z = 0; z < 11; ++z) {
-				if (cube[y][x][z] == 1)
-					glutSolidCube(10);
+				if (cube[y][x][z] == 1) {
+					GLfloat vec[8][3]{
+						{ -5, 5, 5 },{ 5, 5, 5 }, { 5, 5, -5 },{ -5, 5, -5 },
+						{ -5, -5, 5 },{ -5, -5, -5 }, { 5, -5, -5 },{ 5, -5, 5 }
+					};
 
+					glEnable(GL_TEXTURE_2D);
+					glBindTexture(GL_TEXTURE_2D, cubeTexture);
+					glBegin(GL_QUADS);
+					glTexCoord2f(0, 0);
+					glVertex3fv(vec[2]);
+					glTexCoord2f(1, 0);
+					glVertex3fv(vec[3]);
+					glTexCoord2f(1, 1);
+					glVertex3fv(vec[0]);
+					glTexCoord2f(0, 1);
+					glVertex3fv(vec[1]);
+					glEnd();
+
+					glBegin(GL_QUADS);
+					glTexCoord2f(0, 0);
+					glVertex3fv(vec[4]);
+					glTexCoord2f(1, 0);
+					glVertex3fv(vec[7]);
+					glTexCoord2f(1, 1);
+					glVertex3fv(vec[6]);
+					glTexCoord2f(0, 1);
+					glVertex3fv(vec[5]);
+					glEnd();
+
+					glBegin(GL_QUADS);
+					glTexCoord2f(0, 0);
+					glVertex3fv(vec[5]);
+					glTexCoord2f(1, 0);
+					glVertex3fv(vec[6]);
+					glTexCoord2f(1, 1);
+					glVertex3fv(vec[2]);
+					glTexCoord2f(0, 1);
+					glVertex3fv(vec[3]);
+					glEnd();
+
+					glBegin(GL_QUADS);
+					glTexCoord2f(0, 0);
+					glVertex3fv(vec[7]);
+					glTexCoord2f(1, 0);
+					glVertex3fv(vec[4]);
+					glTexCoord2f(1, 1);
+					glVertex3fv(vec[0]);
+					glTexCoord2f(0, 1);
+					glVertex3fv(vec[1]);
+					glEnd();
+
+					glBegin(GL_QUADS);
+					glTexCoord2f(0, 0);
+					glVertex3fv(vec[4]);
+					glTexCoord2f(1, 0);
+					glVertex3fv(vec[5]);
+					glTexCoord2f(1, 1);
+					glVertex3fv(vec[3]);
+					glTexCoord2f(0, 1);
+					glVertex3fv(vec[0]);
+					glEnd();
+
+					glBegin(GL_QUADS);
+					glTexCoord2f(0, 0);
+					glVertex3fv(vec[6]);
+					glTexCoord2f(1, 0);
+					glVertex3fv(vec[7]);
+					glTexCoord2f(1, 1);
+					glVertex3fv(vec[1]);
+					glTexCoord2f(0, 1);
+					glVertex3fv(vec[2]);
+					glEnd();
+					glDisable(GL_TEXTURE_2D);
+				}
 				glTranslatef(0, 0, -10);
 			}
 			glTranslatef(10, 0, 110);
@@ -272,4 +361,58 @@ void Cube::Stage1()
 		cube[0][2][2] = 1;
 		cube[1][2][2] = 1;
 	}
+}
+
+GLubyte* Cube::LoadDIBitmap(const char *filename, BITMAPINFO **info)
+{
+	FILE *fp;
+	GLubyte *bits;
+	int bitsize, infosize;
+	BITMAPFILEHEADER header;
+
+	if ((fp = fopen(filename, "rb")) == NULL)
+		return NULL;
+
+	if (fread(&header, sizeof(BITMAPFILEHEADER), 1, fp) < 1) {
+		fclose(fp);
+		return NULL;
+	}
+
+	if (header.bfType != 'MB') {
+		fclose(fp);
+		return NULL;
+	}
+
+	infosize = header.bfOffBits - sizeof(BITMAPFILEHEADER);
+
+	if ((*info = (BITMAPINFO *)malloc(infosize)) == NULL) {
+		fclose(fp);
+		exit(0);
+		return NULL;
+	}
+
+	if (fread(*info, 1, infosize, fp) < (unsigned int)infosize) {
+		free(*info);
+		fclose(fp);
+		return NULL;
+	}
+
+	if ((bitsize = (*info)->bmiHeader.biSizeImage) == 0)
+		bitsize = ((*info)->bmiHeader.biWidth *
+		(*info)->bmiHeader.biBitCount + 7) / 8.0 *
+		abs((*info)->bmiHeader.biHeight);
+
+	if ((bits = (unsigned char *)malloc(bitsize)) == NULL) {
+		free(*info);
+		fclose(fp);
+		return NULL;
+	}
+
+	if (fread(bits, 1, bitsize, fp) < (unsigned int)bitsize) {
+		free(*info); free(bits);
+		fclose(fp);
+		return NULL;
+	}
+	fclose(fp);
+	return bits;
 }
