@@ -20,7 +20,7 @@ void Planet::drawPlanet()
 
 }
 
-
+// 자전하는 축 설정
 
 void Planet::drawEarth()
 {
@@ -29,14 +29,14 @@ void Planet::drawEarth()
 	glTranslatef(-70, 0, -60);
 
 	glColor3f(0.0f, 0.0f, 1.0f);   // 파랑
-	glRotatef((GLfloat)DayEarth, 0, 1, 0);
+	glRotatef((GLfloat)DayEarth, 0, 1, 0);   // 태양을 따라 y축 회전
 	glTranslatef(30, 80, 0);        // 도는 반지름
-	glRotatef((GLfloat)Time, 0.0, 1.0, 0.0);
+	glRotatef((GLfloat)Time, 0.0, 1.0, 0.0); // y축 회전
 	glutSolidSphere(7, 15, 15);   // 지구
 
 	glPushMatrix();
 	glColor3f(1.0, 1.0, 0.0);      // 노랑
-	glRotatef((GLfloat)Time, 0.0, 1.0, 0.0);
+	glRotatef((GLfloat)Time, 0.0, 1.0, 0.0); // y축 회전
 	glTranslatef(10, 0, 0);        // 지구로부터 떨어진 거리
 	glutSolidSphere(3, 15, 15);    // 달
 	glPopMatrix();
@@ -50,7 +50,7 @@ void Planet::drawSun()
 	glPushMatrix();
 	glColor3f(1.0, 0.2, 0.2);
 	glTranslatef(-70, 80, -60);        // 도는 반지름
-	glRotatef((GLfloat)Time, 0.0, 1.0, 0.0);
+	glRotatef((GLfloat)Time, 1.0, 0.0, 0.0); // x축 회전
 	glutSolidSphere(20, 30, 30);    // 태양
 	glPopMatrix();
 }
@@ -59,12 +59,12 @@ void Planet::drawPlanet1()
 {
 	glPushMatrix();
 
-	glRotatef(0, 1.0, 0.0, 0.0);    // 기울기
+	//glRotatef(0, 1.0, 0.0, 0.0);    // 기울기
 	glTranslatef(30, 40, -150);        // 위치
 
 	glPushMatrix();
 	glColor3f(1.0, 0.7, 0.0);
-	glRotatef((GLfloat)Time, 0.0, 1.0, 0.0);  // 자전
+	glRotatef((GLfloat)Time, 0.0, 1.0, 0.0);  // 자전  y축회전
 	glutSolidSphere(15, 30, 30);     // 행성
 
 	glColor3f(1.0f, 0.6f, 0.0f);
@@ -86,12 +86,11 @@ void Planet::drawPlanet2()
 
 	glutSolidSphere(15, 30, 30);    // 행성
 
-
 	glPopMatrix();
 }
 
 void Planet::updatePlanet()
 {
 	DayEarth = (DayEarth + 10) % 360; // 공전
-	Time = (Time + 20) % 360; // 자전
+	Time = (Time + 5) % 360; // 자전
 }

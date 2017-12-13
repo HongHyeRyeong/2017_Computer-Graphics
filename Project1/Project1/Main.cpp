@@ -4,6 +4,8 @@
 #include "Background.h"
 #include "Stage.h"
 
+
+
 GLvoid drawScene(GLvoid);
 GLvoid Reshape(int w, int h);
 void TimerFunction(int value);
@@ -47,27 +49,27 @@ void main(int argc, char *argv[])
 	glEnable(GL_BLEND); // 블렌딩 투명
 
 						// 조명
-						/*
-						GLfloat DiffuseLight[] = { 1.0f, 1.0f, 1.0f, 0.0f };
-						GLfloat lightPos1[] = { -300, 300 , 300 ,0 }; //뒤
-						GLfloat lightPos2[] = { -300, 300 , -300 ,0 }; //앞
+
+	GLfloat DiffuseLight[] = { 1.0f, 1.0f, 1.0f, 0.0f };
+	GLfloat lightPos1[] = { -300, 300 , 300 ,0 }; //뒤
+	GLfloat lightPos2[] = { -300, 300 , -300 ,0 }; //앞
 
 
-						glEnable(GL_LIGHTING);
-						glEnable(GL_LIGHT0);
-						glEnable(GL_LIGHT1);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHT1);
 
-						glLightfv(GL_LIGHT0, GL_DIFFUSE, DiffuseLight);
-						glLightfv(GL_LIGHT0, GL_POSITION, lightPos1);
+	//glLightfv(GL_LIGHT0, GL_DIFFUSE, DiffuseLight);
+	//glLightfv(GL_LIGHT0, GL_POSITION, lightPos1);
 
-						glLightfv(GL_LIGHT1, GL_DIFFUSE, DiffuseLight);
-						glLightfv(GL_LIGHT1, GL_POSITION, lightPos2);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, DiffuseLight);
+	glLightfv(GL_LIGHT1, GL_POSITION, lightPos2);
 
-						glEnable(GL_COLOR_MATERIAL);
-						glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+	glEnable(GL_COLOR_MATERIAL);
+	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 
-						glMateriali(GL_FRONT, GL_SHININESS, 128);
-						*/
+	glMateriali(GL_FRONT, GL_SHININESS, 128);
+
 
 
 	bg = new Background();
@@ -117,17 +119,23 @@ void Keyboard(unsigned char key, int x, int y)
 		if (selectNum > 0) {
 			selectNum--;
 			stage->setSelectCube(selectNum);
+			PlaySound(TEXT(SOUND_FILE_NAME_CUBE), NULL, SND_ASYNC);
+
 		}
 	}
 	else if (key == 'e') {
 		if (selectNum < stage->getNumCube() - 1) {
 			selectNum++;
 			stage->setSelectCube(selectNum);
+			PlaySound(TEXT(SOUND_FILE_NAME_CUBE), NULL, SND_ASYNC);
+
 		}
 	}
 	else if (key == 'r')
 	{
 		stage->setCubeType(1);
+		PlaySound(TEXT(SOUND_FILE_NAME_CUBE), NULL, SND_ASYNC);
+
 
 		if (saveNum1 == selectNum)
 		{
@@ -147,14 +155,26 @@ void Keyboard(unsigned char key, int x, int y)
 		}
 	}
 	else if (key == 't')
+	{
 		stage->setCubeType(0);
+		PlaySound(TEXT(SOUND_FILE_NAME_CUBE), NULL, SND_ASYNC);
+	}
 	else if (key == 'a' || key == 'z' || key == 's' || key == 'x' || key == 'd' || key == 'c' ||
 		key == 'f' || key == 'g' || key == 'h')
+	{
 		stage->Keyboard(key);
-	else if (key == 'u')
+		PlaySound(TEXT(SOUND_FILE_NAME_CUBE), NULL, SND_ASYNC);
+
+	}
+	else if (key == 'u') {
 		bg->setGrid(true);
-	else if (key == 'U')
+		PlaySound(TEXT(SOUND_FILE_NAME_CUBE), NULL, SND_ASYNC);
+	}
+	else if (key == 'U') {
 		bg->setGrid(false);
+		PlaySound(TEXT(SOUND_FILE_NAME_CUBE), NULL, SND_ASYNC);
+
+	}
 	else if (key == 'i') {
 		rotX = 30;
 		rotY = 0;

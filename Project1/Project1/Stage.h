@@ -1,8 +1,17 @@
 #pragma once
+#pragma comment(lib,"winmm")
 
 #include <GL/glut.h>
 #include <iostream>
 #include "Cube.h"
+#include<mmsystem.h>
+
+#define SOUND_FILE_NAME_BGM    "    "
+#define SOUND_FILE_NAME_CUBE   "./sound/cube.wav "
+#define SOUND_FILE_NAME_CLEAR   "./sound/clear.wav"
+#define SOUND_FILE_NAME_GAME_OVER   "  "
+
+
 
 class Stage
 {
