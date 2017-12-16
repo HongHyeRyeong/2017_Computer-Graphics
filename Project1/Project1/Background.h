@@ -9,8 +9,9 @@ class Background
 {
 	Planet* planet; 
 	bool activeGrid;
-	int skyboxSize;
+
 	GLuint skyboxTexture[6];
+	int skyboxSize;
 public:
 	Background();
 	~Background();

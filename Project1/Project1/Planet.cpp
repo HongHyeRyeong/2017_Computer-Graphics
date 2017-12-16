@@ -5,13 +5,14 @@ Planet::Planet()
 	DayEarth = 0;
 	DayMars = 0;
 	Time = 0;
+	angle = 0;
 
 	GLubyte *pBytes;
 	BITMAPINFO *info;
 
 	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, GL_MODULATE);
 	glEnable(GL_TEXTURE_2D);
-	glGenTextures(4, planetTexture);
+	glGenTextures(7, planetTexture);
 
 	glBindTexture(GL_TEXTURE_2D, planetTexture[0]);
 	pBytes = LoadDIBitmap("./Resource/planet1.bmp", &info);
@@ -57,20 +58,51 @@ Planet::Planet()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, GL_MODULATE);
+
+	glBindTexture(GL_TEXTURE_2D, planetTexture[5]);
+	pBytes = LoadDIBitmap("./Resource/planet6.bmp", &info);
+	glTexImage2D(GL_TEXTURE_2D, 0, 3, 300, 300, 0, GL_BGR_EXT, GL_UNSIGNED_BYTE, pBytes);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, GL_MODULATE);
+
+	glBindTexture(GL_TEXTURE_2D, planetTexture[6]);
+	pBytes = LoadDIBitmap("./Resource/planet7.bmp", &info);
+	glTexImage2D(GL_TEXTURE_2D, 0, 3, 300, 300, 0, GL_BGR_EXT, GL_UNSIGNED_BYTE, pBytes);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, GL_MODULATE);
 }
 
 void Planet::drawPlanet()
 {
+	glPushMatrix();
+
+	glRotatef(angle, 0.0, 1.0, 0.0);
 	drawEarth();
 	drawSun();
+
+	glRotatef(10, 0.0, 1.0, 0.0);
 	drawPlanet1();
+	glRotatef(-50, 0.0, 1.0, 0.0);
 	drawPlanet2();
+	glRotatef(70, 0.0, 1.0, 0.0);
+	drawPlanet3();
+	glRotatef(90, 0.0, 1.0, 0.0);
+	drawPlanet4();
+
+	glPopMatrix();
+
 }
 
 void Planet::drawEarth()
 {
 	glPushMatrix();
-	glTranslatef(-70, 0, -60);
+	glTranslatef(-100, 0, -800);
 
 	glColor3f(1.0f, 1.0f, 1.0f);
 	glEnable(GL_TEXTURE_2D);
@@ -80,16 +112,16 @@ void Planet::drawEarth()
 	glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
 
 	glBindTexture(GL_TEXTURE_2D, planetTexture[0]);
-	glRotatef((GLfloat)DayEarth, 0, 1, 0); 
-	glTranslatef(30, 80, 0);     
-	glRotatef((GLfloat)Time, 0.0, 1.0, 0.0); 
-	glutSolidSphere(7, 15, 15); 
+	glRotatef((GLfloat)DayEarth, 0, 1, 0);
+	glTranslatef(30, 80, 0);
+	glRotatef((GLfloat)Time, 0.0, 1.0, 0.0);
+	glutSolidSphere(7, 15, 15);
 
 	glPushMatrix();
 	glBindTexture(GL_TEXTURE_2D, planetTexture[1]);
 	glRotatef((GLfloat)Time, 0.0, 1.0, 0.0);
-	glTranslatef(10, 0, 0);     
-	glutSolidSphere(3, 15, 15); 
+	glTranslatef(10, 0, 0);
+	glutSolidSphere(3, 15, 15);
 	glPopMatrix();
 
 	glDisable(GL_TEXTURE_GEN_S);
@@ -110,7 +142,7 @@ void Planet::drawSun()
 	glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
 
 	glBindTexture(GL_TEXTURE_2D, planetTexture[2]);
-	glTranslatef(-70, 80, -60);
+	glTranslatef(-100, 80, -800);
 	glRotatef((GLfloat)Time, 1.0, 0.0, 0.0);
 	glutSolidSphere(20, 30, 30);
 
@@ -124,7 +156,7 @@ void Planet::drawPlanet1()
 {
 	glPushMatrix();
 
-	glTranslatef(30, 40, -150);        // 위치
+	glTranslatef(-300, 0, -500);        // 위치
 
 	glPushMatrix();
 	glColor3f(1.0f, 1.0f, 1.0f);
@@ -163,7 +195,7 @@ void Planet::drawPlanet2()
 	glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
 
 	glBindTexture(GL_TEXTURE_2D, planetTexture[4]);
-	glTranslatef(100, 80, -120);
+	glTranslatef(150, 80, -400);
 	glRotatef((GLfloat)Time, 0.0, 1.0, 0.0);
 
 	glutSolidSphere(15, 30, 30);
@@ -175,8 +207,56 @@ void Planet::drawPlanet2()
 	glPopMatrix();
 }
 
+void Planet::drawPlanet3()
+{
+	glPushMatrix();
+
+	glColor3f(1.0f, 1.0f, 1.0f);
+	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_TEXTURE_GEN_S);
+	glEnable(GL_TEXTURE_GEN_T);
+	glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
+	glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
+
+	glBindTexture(GL_TEXTURE_2D, planetTexture[5]);
+	glTranslatef(-200, 70, 450);
+	glRotatef((GLfloat)Time, 0.0, 1.0, 0.0);
+
+	glutSolidSphere(17, 30, 30);
+
+	glDisable(GL_TEXTURE_GEN_S);
+	glDisable(GL_TEXTURE_GEN_T);
+	glDisable(GL_TEXTURE_2D);
+
+	glPopMatrix();
+}
+
+void Planet::drawPlanet4()
+{
+	glPushMatrix();
+	glColor3f(1.0f, 1.0f, 1.0f);
+	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_TEXTURE_GEN_S);
+	glEnable(GL_TEXTURE_GEN_T);
+	glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
+	glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
+
+	glBindTexture(GL_TEXTURE_2D, planetTexture[6]);
+	glTranslatef(30, 100, 800);
+	glRotatef((GLfloat)Time, 0.0, 1.0, 0.0);
+
+	glutSolidSphere(15, 30, 800);
+
+	glDisable(GL_TEXTURE_GEN_S);
+	glDisable(GL_TEXTURE_GEN_T);
+	glDisable(GL_TEXTURE_2D);
+
+	glPopMatrix();
+}
+
 void Planet::updatePlanet()
 {
+	angle++;
 	DayEarth = (DayEarth + 10) % 360; // 공전
 	Time = (Time + 5) % 360; // 자전
 }

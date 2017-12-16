@@ -159,7 +159,6 @@ void Background::updateBackground(float elapsedTime)
 	planet->updatePlanet();
 }
 
-
 void Background::drawSkybox()
 {
 	GLfloat vec[8][3]{

@@ -7,8 +7,6 @@
 
 class Menu
 {
-	int totalStage;
-	int selectStage;
 	GLuint TitleTexture;
 public:
 	Menu();

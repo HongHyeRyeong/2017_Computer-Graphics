@@ -14,20 +14,15 @@ Stage::Stage(int numStage) : numStage(numStage)
 			for (int z = 0; z < 11; ++z)
 				map[y][x][z] = 0;
 
-	next = 0;
-	title = 0;
-
+	stageType = 0;
 	selectCube = 0;
-	saveCube1 = 0;
-	saveCube2 = 1;
-	saveCube3 = 2;
 
 	GLubyte *pBytes;
 	BITMAPINFO *info;
 
 	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, GL_MODULATE);
 	glEnable(GL_TEXTURE_2D);
-	glGenTextures(2, mapTexture);
+	glGenTextures(4, mapTexture);
 
 	glBindTexture(GL_TEXTURE_2D, mapTexture[0]);
 	pBytes = LoadDIBitmap("./Resource/map.bmp", &info);
@@ -47,11 +42,26 @@ Stage::Stage(int numStage) : numStage(numStage)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, GL_MODULATE);
 
-	if (numStage == 1) {
-		numCube = 3;
-		timeStage = 60 * 5;	// 5분
+	glBindTexture(GL_TEXTURE_2D, mapTexture[2]);
+	pBytes = LoadDIBitmap("./Resource/gameover.bmp", &info);
+	glTexImage2D(GL_TEXTURE_2D, 0, 3, 1000, 750, 0, GL_BGR_EXT, GL_UNSIGNED_BYTE, pBytes);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, GL_MODULATE);
+
+	glBindTexture(GL_TEXTURE_2D, mapTexture[3]);
+	pBytes = LoadDIBitmap("./Resource/gameclear.bmp", &info);
+	glTexImage2D(GL_TEXTURE_2D, 0, 3, 1000, 750, 0, GL_BGR_EXT, GL_UNSIGNED_BYTE, pBytes);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, GL_MODULATE);
+
+	if (numStage == 1)
 		Stage1();
-	}
 }
 
 Stage::~Stage()
@@ -64,115 +74,39 @@ Stage::~Stage()
 
 void Stage::drawStage()
 {
-	// 큐브 그리기 고정
-	if (selectCube < numCube)
-		cube[selectCube]->drawCube();
-
-	// map 그리기
-	glPushMatrix();
-	glTranslatef(-50, 5, 50);
-
-	for (int y = 0; y < 11; ++y) {
-		for (int x = 0; x < 11; ++x) {
-			for (int z = 0; z < 11; ++z) {
-				if (map[y][x][z] == 1) {
-					glEnable(GL_BLEND);
-					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-					glColor4f(1.0, 1.0, 1.0, 0.5);
-					glEnable(GL_TEXTURE_2D);
-					glBindTexture(GL_TEXTURE_2D, mapTexture[0]);
-					drawCube();
-					glDisable(GL_TEXTURE_2D);
-					glDisable(GL_BLEND);
-				}
-				else if (map[y][x][z] == 2) {
-					glColor3f(1.0, 1.0, 1.0);
-					glEnable(GL_TEXTURE_2D);
-					glBindTexture(GL_TEXTURE_2D, mapTexture[1]);
-					drawCube();
-					glDisable(GL_TEXTURE_2D);
-				}
-				else if (map[y][x][z] == 3) {
-					glColor3f(1.0, 1.0, 1.0);
-					glEnable(GL_TEXTURE_2D);
-					glBindTexture(GL_TEXTURE_2D, mapTexture[0]);
-					drawCube();
-					glDisable(GL_TEXTURE_2D);
-				}
-
-				glTranslatef(0, 0, -10);
-			}
-			glTranslatef(10, 0, 110);
-		}
-		glTranslatef(-110, 10, 0);
-	}
-	glPopMatrix();
-
-	// 게임 시간
-	if (timeStage >= 0) {
-		glLoadIdentity();
-		int timeM{ (int)timeStage / 60 };
-		int timeS{ (int)timeStage - timeM * 60 };
-		char string[20];
-		std::sprintf(string, "%d min %d second", timeM, timeS);
-
-		glColor3f(1.0, 1.0, 1.0);
-		glRasterPos2f(-125, 135);
-		for (int i = 0; i < (int)strlen(string); i++)
-			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, string[i]);
-	}
-	else {
-		if (title == 0)
-		{
-
-			// 게임오버 이미지
-
-			//
-			PlaySound(TEXT(SOUND_FILE_NAME_GAME_OVER), NULL, SND_SYNC); // 프로그램 멈춤 + 소리 -> F1키 누르면 타이틀로 
-			title = 1;
-		}
-	}
+	if (stageType == 0 || stageType == 2)
+		drawGamePlay();
+	else if (stageType == 1)
+		drawGameOver();
+	else if (stageType == 2)
+		drawGameClear();
 }
 
 void Stage::updateStage(float elapsedTime)
 {
-	int num = cubetotalnum;
-	for (int y = 0; y < 11; ++y) {
-		for (int x = 0; x < 11; ++x) {
-			for (int z = 0; z < 11; ++z) {
+	if (stageType == 0) {
+		int num = cubetotalnum;
+		for (int y = 0; y < 11; ++y)
+			for (int x = 0; x < 11; ++x)
+				for (int z = 0; z < 11; ++z)
+					if (map[y][x][z] == 3)
+						num--;
 
-				if (map[y][x][z] == 3) // 제한 된 틀에 큐브가 있을 때
-				{
-					//PlaySound(TEXT(SOUND_FILE_NAME_CLEAR), NULL, SND_SYNC); // 일단 소리로 클리어 처리
-					num--;
-				}
-			}
-	
+		if (num == 0)
+		{
+			stageType = 2;
+			PlaySound(TEXT(SOUND_FILE_NAME_CLEAR), NULL, SND_ASYNC | SND_ALIAS);
 		}
-	}
 
-	if (num == 0)
-	{
-		std::cout << " ok ";
-		if (next == 0) {
-			PlaySound(TEXT(SOUND_FILE_NAME_CLEAR), NULL, SND_ASYNC | SND_ALIAS); // 실행중일때 클리어
-																				 // clear 이미지
-
-																				 //
-			next++;  // next stage로 넘어가면 됨
+		// 게임 시간
+		if (timeStage <= 0) {
+			timeStage = 0;
+			stageType = 1;
+			PlaySound(TEXT(SOUND_FILE_NAME_GAME_OVER), NULL, SND_ASYNC | SND_ALIAS);
 		}
+		else
+			timeStage -= elapsedTime / 1000;
 	}
-	if (next == 1)
-	{
-		// ex) new stage
-	}
-
-	// 게임 시간
-	if (timeStage <= 0) {
-		timeStage = 0;
-	}
-	else
-		timeStage -= elapsedTime / 1000;
 }
 
 void Stage::Keyboard(unsigned char key)
@@ -240,24 +174,107 @@ void Stage::Keyboard(unsigned char key)
 	}
 }
 
-void Stage::Stage1()
+void Stage::drawGamePlay()
 {
-	map[1][5][5] = 1;
-	map[0][5][5] = 1;
-	map[0][5][6] = 1;
-	map[0][6][5] = 1;
-	map[0][6][4] = 1;
-	map[1][6][4] = 1;
-	map[0][4][4] = 1;
-	map[0][4][5] = 1;
-	map[0][4][6] = 1;
-	map[0][5][4] = 1;
-	map[1][4][6] = 1;
 
-	cubetotalnum = 11;
+	// 큐브 그리기 고정
+	if (selectCube < numCube)
+		cube[selectCube]->drawCube();
 
-	for (int i = 0; i < numCube; ++i)
-		cube[i] = new Cube(1, i);
+	// map 그리기
+	glPushMatrix();
+	glTranslatef(-50, 5, 50);
+
+	for (int y = 0; y < 11; ++y) {
+		for (int x = 0; x < 11; ++x) {
+			for (int z = 0; z < 11; ++z) {
+				if (map[y][x][z] == 1) {
+					glEnable(GL_BLEND);
+					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+					glColor4f(0.8, 0.8, 0.8, 0.5);
+					glEnable(GL_TEXTURE_2D);
+					glBindTexture(GL_TEXTURE_2D, mapTexture[0]);
+					drawCube();
+					glDisable(GL_TEXTURE_2D);
+					glDisable(GL_BLEND);
+				}
+				else if (map[y][x][z] == 2) {
+					glColor3f(1.0, 1.0, 1.0);
+					glEnable(GL_TEXTURE_2D);
+					glBindTexture(GL_TEXTURE_2D, mapTexture[1]);
+					drawCube();
+					glDisable(GL_TEXTURE_2D);
+				}
+				else if (map[y][x][z] == 3) {
+					glColor3f(1.0, 1.0, 1.0);
+					glEnable(GL_TEXTURE_2D);
+					glBindTexture(GL_TEXTURE_2D, mapTexture[0]);
+					drawCube();
+					glDisable(GL_TEXTURE_2D);
+				}
+
+				glTranslatef(0, 0, -10);
+			}
+			glTranslatef(10, 0, 110);
+		}
+		glTranslatef(-110, 10, 0);
+	}
+	glPopMatrix();
+
+
+	// 게임 시간
+	if (timeStage >= 0) {
+		glLoadIdentity();
+		int timeM{ (int)timeStage / 60 };
+		int timeS{ (int)timeStage - timeM * 60 };
+		char string[20];
+		std::sprintf(string, "%d min %d second", timeM, timeS);
+
+		glColor3f(1.0, 1.0, 1.0);
+		glRasterPos2f(-125, 135);
+		for (int i = 0; i < (int)strlen(string); i++)
+			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, string[i]);
+	}
+}
+
+void Stage::drawGameOver()
+{
+	glLoadIdentity();
+	glColor3f(1.0, 1.0, 1.0);
+
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, mapTexture[2]);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0, 0);
+	glVertex3f(-135, -115, 0);
+	glTexCoord2f(1, 0);
+	glVertex3f(133, -115, 0);
+	glTexCoord2f(1, 1);
+	glVertex3f(133, 155, 0);
+	glTexCoord2f(0, 1);
+	glVertex3f(-135, 155, 0);
+	glEnd();
+	glDisable(GL_TEXTURE_2D);
+}
+
+void Stage::drawGameClear()
+{
+	glLoadIdentity();
+	glColor3f(1.0, 1.0, 1.0);
+
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, mapTexture[3]);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0, 0);
+	glVertex3f(-135, -115, 0);
+	glTexCoord2f(1, 0);
+	glVertex3f(133, -115, 0);
+	glTexCoord2f(1, 1);
+	glVertex3f(133, 155, 0);
+	glTexCoord2f(0, 1);
+	glVertex3f(-135, 155, 0);
+	glEnd();
+	glDisable(GL_TEXTURE_2D);
 }
 
 void  Stage::drawCube()
@@ -386,4 +403,26 @@ GLubyte* Stage::LoadDIBitmap(const char *filename, BITMAPINFO **info)
 	}
 	fclose(fp);
 	return bits;
+}
+
+void Stage::Stage1()
+{
+	map[1][5][5] = 1;
+	map[0][5][5] = 1;
+	map[0][5][6] = 1;
+	map[0][6][5] = 1;
+	map[0][6][4] = 1;
+	map[1][6][4] = 1;
+	map[0][4][4] = 1;
+	map[0][4][5] = 1;
+	map[0][4][6] = 1;
+	map[0][5][4] = 1;
+	map[1][4][6] = 1;
+
+	numCube = 3;
+	timeStage = 60;
+	cubetotalnum = 11;
+
+	for (int i = 0; i < numCube; ++i)
+		cube[i] = new Cube(1, i);
 }

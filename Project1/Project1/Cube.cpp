@@ -7,9 +7,6 @@ Cube::Cube(int numStage, int numCube) : numStage(numStage), numCube(numCube)
 			for (int z = 0; z < 11; ++z)
 				cube[y][x][z] = 0;
 	type = 0;
-	
-	if (numStage == 1)
-		Stage1();
 
 	GLubyte *pBytes;
 	BITMAPINFO *info;
@@ -26,6 +23,9 @@ Cube::Cube(int numStage, int numCube) : numStage(numStage), numCube(numCube)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, GL_MODULATE);
+
+	if (numStage == 1)
+		Stage1();
 }
 
 void Cube::drawCube()

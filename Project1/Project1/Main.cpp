@@ -15,7 +15,7 @@ void Motion(int x, int y);
 float traX, traY, traZ;
 float rotX{ 30 }, rotY, rotZ;
 
-bool left_button{ false };
+bool left_button{ false }, grid{ false };
 int mouseX, mouseY;
 
 Background* bg;
@@ -23,13 +23,8 @@ Stage* stage;
 Menu* menu;
 
 DWORD g_startTime = NULL;
-DWORD g_bulletTime = NULL;
 
 int selectNum;
-int saveNum1=  0;
-int saveNum2 = 1;
-int saveNum3 = 2;
-
 
 void main(int argc, char *argv[])
 {
@@ -50,24 +45,7 @@ void main(int argc, char *argv[])
 	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 	glMateriali(GL_FRONT, GL_SHININESS, 128);
 
-	// 조명	
-	//GLfloat DiffuseLight[] = { 1.0f, 1.0f, 1.0f, 0.0f };
-	//GLfloat lightPos1[] = { 0, 300 , 0 ,0 };	//뒤
-	//GLfloat lightPos2[] = { -300, 300 , -300 ,0 };	//앞
-
-	//glEnable(GL_LIGHTING);
-	//glEnable(GL_LIGHT0);
-	//glEnable(GL_LIGHT1);
-
-	//glLightfv(GL_LIGHT0, GL_DIFFUSE, DiffuseLight);
-	//glLightfv(GL_LIGHT0, GL_POSITION, lightPos1);
-
-	//glLightfv(GL_LIGHT1, GL_DIFFUSE, DiffuseLight);
-	//glLightfv(GL_LIGHT1, GL_POSITION, lightPos2);
-
-	//	
 	menu = new Menu();
-	g_startTime = timeGetTime();
 
 	glutMainLoop();
 
@@ -90,10 +68,30 @@ GLvoid drawScene(GLvoid)
 		DWORD elapsedTime = currTime - g_startTime;
 		g_startTime = currTime;
 
+		if (stage->getStageType() == 2) {
+			// 조명
+			GLfloat AmbientLight[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+			GLfloat DiffuseLight[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+			GLfloat SpecularLight[4] = { 1.0, 1.0, 1.0, 1.0 };
+			GLfloat lightPos[4] = { 0.0, 100.0, 0.0, 1.0 };
+			GLfloat spotDir[3] = { 0.0, -1.0, 0.0 };
+
+			glEnable(GL_LIGHTING);
+			glEnable(GL_LIGHT0);
+			glLightfv(GL_LIGHT0, GL_AMBIENT, AmbientLight);
+			glLightfv(GL_LIGHT0, GL_DIFFUSE, DiffuseLight);
+			glLightfv(GL_LIGHT0, GL_SPECULAR, SpecularLight);
+			glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+			glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, spotDir);
+			glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 90.0f);
+			glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 10.0f);
+		}
+
 		bg->updateBackground((float)elapsedTime);
 		stage->updateStage((float)elapsedTime);
 
-		bg->drawBackground();
+		if (stage->getStageType() != 1)
+			bg->drawBackground();
 		stage->drawStage();
 	}
 	else
@@ -115,9 +113,13 @@ void Keyboard(unsigned char key, int x, int y)
 
 	if (menu == NULL) {
 		if (key == 27) {
-			PlaySound(TEXT(SOUND_FILE_NAME_CUBE), NULL, SND_ASYNC);
-			menu = new Menu();
-
+			if (stage->getStageType() != 0) {
+				PlaySound(TEXT(SOUND_FILE_NAME_CUBE), NULL, SND_ASYNC);
+				menu = new Menu();
+				rotX = 30;
+				rotY = 0;
+				glEnable(GL_LIGHTING);
+			}
 		}
 		else if (key == 'w') {
 			if (selectNum > 0) {
@@ -140,13 +142,9 @@ void Keyboard(unsigned char key, int x, int y)
 			PlaySound(TEXT(SOUND_FILE_NAME_CUBE), NULL, SND_ASYNC);
 		}
 		else if (key == 'u') {
-			bg->setGrid(true);
+			grid = !grid;
+			bg->setGrid(grid);
 			PlaySound(TEXT(SOUND_FILE_NAME_CUBE), NULL, SND_ASYNC);
-		}
-		else if (key == 'U') {
-			bg->setGrid(false);
-			PlaySound(TEXT(SOUND_FILE_NAME_CUBE), NULL, SND_ASYNC);
-
 		}
 		else if (key == '1')
 			stage = new Stage(1);
@@ -162,6 +160,7 @@ void Mouse(int button, int state, int x, int y)
 			delete menu;
 			menu = NULL;
 
+			g_startTime = timeGetTime();
 			bg = new Background();
 			stage = new Stage(1);
 		}

@@ -2,9 +2,6 @@
 
 Menu::Menu()
 {
-	totalStage = 7;
-	selectStage = 1;
-
 	GLubyte *pBytes;
 	BITMAPINFO *info;
 
