@@ -114,7 +114,12 @@ void Keyboard(unsigned char key, int x, int y)
 		exit(0);
 
 	if (menu == NULL) {
-		if (key == 'w') {
+		if (key == 27) {
+			PlaySound(TEXT(SOUND_FILE_NAME_CUBE), NULL, SND_ASYNC);
+			menu = new Menu();
+
+		}
+		else if (key == 'w') {
 			if (selectNum > 0) {
 				selectNum--;
 				stage->setSelectCube(selectNum);

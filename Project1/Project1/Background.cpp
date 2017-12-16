@@ -151,7 +151,6 @@ void Background::drawBackground()
 	}
 
 	// Planet
-	// 아래 주석 풀면 Planet이 그려짐
 	planet->drawPlanet();
 }
 

@@ -65,7 +65,6 @@ void Planet::drawPlanet()
 	drawSun();
 	drawPlanet1();
 	drawPlanet2();
-
 }
 
 void Planet::drawEarth()

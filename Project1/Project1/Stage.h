@@ -9,6 +9,7 @@
 #define SOUND_FILE_NAME_BGM    "    "
 #define SOUND_FILE_NAME_CUBE   "./sound/cube.wav "
 #define SOUND_FILE_NAME_CLEAR   "./sound/clear.wav"
+#define SOUND_FILE_NAME_GAME_OVER   "./sound/gameover.wav"
 
 class Stage
 {
@@ -18,10 +19,12 @@ class Stage
 	int map[11][11][11];	// 0일때 empty, 1일때 기본 제한, 2일때 틀 아닌 곳 고정, 3일때 틀 인곳 고정
 
 	int cubetotalnum;
+	int next;
+	int title;
 
 	Cube* cube[10];
 	float timeStage;
-	GLuint cubeTexture[3];
+	GLuint mapTexture[2];
 public:
 	Stage();
 	Stage(int numStage);

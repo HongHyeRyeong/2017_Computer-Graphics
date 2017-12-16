@@ -2,6 +2,10 @@
 
 Stage::Stage()
 {
+}
+
+Stage::Stage(int numStage) : numStage(numStage)
+{
 	for (int i = 0; i < 10; ++i)
 		cube[i] = NULL;
 
@@ -10,14 +14,22 @@ Stage::Stage()
 			for (int z = 0; z < 11; ++z)
 				map[y][x][z] = 0;
 
+	next = 0;
+	title = 0;
+
+	selectCube = 0;
+	saveCube1 = 0;
+	saveCube2 = 1;
+	saveCube3 = 2;
+
 	GLubyte *pBytes;
 	BITMAPINFO *info;
 
 	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, GL_MODULATE);
 	glEnable(GL_TEXTURE_2D);
-	glGenTextures(3, cubeTexture);
+	glGenTextures(2, mapTexture);
 
-	glBindTexture(GL_TEXTURE_2D, cubeTexture[0]);
+	glBindTexture(GL_TEXTURE_2D, mapTexture[0]);
 	pBytes = LoadDIBitmap("./Resource/map.bmp", &info);
 	glTexImage2D(GL_TEXTURE_2D, 0, 3, 118, 118, 0, GL_BGR_EXT, GL_UNSIGNED_BYTE, pBytes);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -26,16 +38,7 @@ Stage::Stage()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, GL_MODULATE);
 
-	glBindTexture(GL_TEXTURE_2D, cubeTexture[1]);
-	pBytes = LoadDIBitmap("./Resource/cube.bmp", &info);
-	glTexImage2D(GL_TEXTURE_2D, 0, 3, 118, 118, 0, GL_BGR_EXT, GL_UNSIGNED_BYTE, pBytes);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, GL_MODULATE);
-
-	glBindTexture(GL_TEXTURE_2D, cubeTexture[2]);
+	glBindTexture(GL_TEXTURE_2D, mapTexture[1]);
 	pBytes = LoadDIBitmap("./Resource/map2.bmp", &info);
 	glTexImage2D(GL_TEXTURE_2D, 0, 3, 118, 118, 0, GL_BGR_EXT, GL_UNSIGNED_BYTE, pBytes);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -43,22 +46,6 @@ Stage::Stage()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, GL_MODULATE);
-}
-
-Stage::Stage(int numStage) : numStage(numStage)
-{
-	for (int i = 0; i < 10; ++i)
-		cube[i] = NULL;
-	for (int y = 0; y < 11; ++y)
-		for (int x = 0; x < 11; ++x)
-			for (int z = 0; z < 11; ++z)
-				map[y][x][z] = 0;
-	
-	selectCube = 0;
-	
-	saveCube1 = 0;
-	saveCube2 = 1;
-	saveCube3 = 2;
 
 	if (numStage == 1) {
 		numCube = 3;
@@ -78,7 +65,7 @@ Stage::~Stage()
 void Stage::drawStage()
 {
 	// 큐브 그리기 고정
-	if (selectCube < numCube&&cube[selectCube]->getType() == 0)
+	if (selectCube < numCube)
 		cube[selectCube]->drawCube();
 
 	// map 그리기
@@ -93,7 +80,7 @@ void Stage::drawStage()
 					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 					glColor4f(1.0, 1.0, 1.0, 0.5);
 					glEnable(GL_TEXTURE_2D);
-					glBindTexture(GL_TEXTURE_2D, cubeTexture[0]);
+					glBindTexture(GL_TEXTURE_2D, mapTexture[0]);
 					drawCube();
 					glDisable(GL_TEXTURE_2D);
 					glDisable(GL_BLEND);
@@ -101,14 +88,14 @@ void Stage::drawStage()
 				else if (map[y][x][z] == 2) {
 					glColor3f(1.0, 1.0, 1.0);
 					glEnable(GL_TEXTURE_2D);
-					glBindTexture(GL_TEXTURE_2D, cubeTexture[1]);
+					glBindTexture(GL_TEXTURE_2D, mapTexture[1]);
 					drawCube();
 					glDisable(GL_TEXTURE_2D);
 				}
 				else if (map[y][x][z] == 3) {
 					glColor3f(1.0, 1.0, 1.0);
 					glEnable(GL_TEXTURE_2D);
-					glBindTexture(GL_TEXTURE_2D, cubeTexture[2]);
+					glBindTexture(GL_TEXTURE_2D, mapTexture[0]);
 					drawCube();
 					glDisable(GL_TEXTURE_2D);
 				}
@@ -134,6 +121,17 @@ void Stage::drawStage()
 		for (int i = 0; i < (int)strlen(string); i++)
 			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, string[i]);
 	}
+	else {
+		if (title == 0)
+		{
+
+			// 게임오버 이미지
+
+			//
+			PlaySound(TEXT(SOUND_FILE_NAME_GAME_OVER), NULL, SND_SYNC); // 프로그램 멈춤 + 소리 -> F1키 누르면 타이틀로 
+			title = 1;
+		}
+	}
 }
 
 void Stage::updateStage(float elapsedTime)
@@ -152,9 +150,21 @@ void Stage::updateStage(float elapsedTime)
 	
 		}
 	}
-	if (num == 0 )
+
+	if (num == 0)
 	{
 		std::cout << " ok ";
+		if (next == 0) {
+			PlaySound(TEXT(SOUND_FILE_NAME_CLEAR), NULL, SND_ASYNC | SND_ALIAS); // 실행중일때 클리어
+																				 // clear 이미지
+
+																				 //
+			next++;  // next stage로 넘어가면 됨
+		}
+	}
+	if (next == 1)
+	{
+		// ex) new stage
 	}
 
 	// 게임 시간
