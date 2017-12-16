@@ -8,10 +8,8 @@ Cube::Cube(int numStage, int numCube) : numStage(numStage), numCube(numCube)
 				cube[y][x][z] = 0;
 	type = 0;
 	
-	
 	if (numStage == 1)
 		Stage1();
-
 
 	GLubyte *pBytes;
 	BITMAPINFO *info;

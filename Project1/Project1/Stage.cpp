@@ -57,7 +57,7 @@ void Stage::drawStage()
 				if (map[y][x][z] == 1) {
 					glEnable(GL_BLEND);
 					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-					glColor4f(0.0, 0.5, 1.0, 0.5);
+					glColor4f(0.2, 0.2, 0.2, 0.5);
 					glutSolidCube(10);
 					glDisable(GL_BLEND);
 				}
