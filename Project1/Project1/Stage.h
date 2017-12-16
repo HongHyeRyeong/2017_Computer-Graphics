@@ -9,8 +9,6 @@
 #define SOUND_FILE_NAME_BGM    "    "
 #define SOUND_FILE_NAME_CUBE   "./sound/cube.wav "
 #define SOUND_FILE_NAME_CLEAR   "./sound/clear.wav"
-#define SOUND_FILE_NAME_GAME_OVER   "  "
-
 
 
 class Stage
@@ -18,7 +16,9 @@ class Stage
 	int numStage, numCube;
 	int selectCube;
 	int saveCube1, saveCube2, saveCube3;
-	int map[11][11][11];
+	int map[11][11][11];	// 0일때 empty, 1일때 기본 제한, 2일때 틀 아닌 곳 고정, 3일때 틀 인곳 고정
+
+	int cubetotalnum;
 
 	Cube* cube[10];
 	float timeStage;

@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <iostream>
 
+
 class Cube
 {
 	int numStage, numCube;
@@ -29,7 +30,7 @@ public:
 	int getType() { return type; }
 	void setType(int num) { type = num; }
 	// 충돌체크
-	int getCube(int x, int y, int z) { return cube[y][x][z]; }
+	int getCube(int y, int x, int z) { return cube[y][x][z]; }
 
 	// 고정
 	int getsave1() { return save1; }
@@ -40,7 +41,7 @@ public:
 	void saveType2(int num) { save2 = num; }
 	void saveType3(int num) { save3 = num; }
 
-	void Check(int x, int y, int z) { check = cube[y][x][z]; }
+	void Check(int y, int x, int z) { check = cube[y][x][z]; }
 
 
 	GLubyte * LoadDIBitmap(const char *filename, BITMAPINFO **info);

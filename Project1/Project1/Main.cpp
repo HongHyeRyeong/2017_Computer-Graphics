@@ -133,26 +133,30 @@ void Keyboard(unsigned char key, int x, int y)
 	}
 	else if (key == 'r')
 	{
-		stage->setCubeType(1);
+		stage->Keyboard(key);
+
+		// 
+
 		PlaySound(TEXT(SOUND_FILE_NAME_CUBE), NULL, SND_ASYNC);
 
-
+		/*
 		if (saveNum1 == selectNum)
 		{
-			stage->savecube1(1);
-			stage->setSaveCube1(saveNum1);
+		stage->savecube1(1);
+		stage->setSaveCube1(saveNum1);
 		}
 		if (saveNum2 == selectNum)
 		{
-			stage->savecube2(1);
-			stage->setSaveCube2(saveNum2);
+		stage->savecube2(1);
+		stage->setSaveCube2(saveNum2);
 		}
 
 		if (saveNum3 == selectNum)
 		{
-			stage->savecube3(1);
-			stage->setSaveCube3(saveNum3);
+		stage->savecube3(1);
+		stage->setSaveCube3(saveNum3);
 		}
+		*/
 	}
 	else if (key == 't')
 	{
