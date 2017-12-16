@@ -1,14 +1,16 @@
 #pragma once
 
-#include <GL/glut.h> 
+#include <GL/glut.h>
+#include <Windows.h>
+#include <stdio.h>
 
 class Planet
 {
 	int DayEarth, DayMars;
 	int Time;
+	GLuint planetTexture[5];
 public:
 	Planet();
-	~Planet();
 
 	void drawPlanet();
 	void drawEarth();
@@ -16,5 +18,7 @@ public:
 	void drawPlanet1();
 	void drawPlanet2();
 	void updatePlanet();
+
+	GLubyte* LoadDIBitmap(const char *filename, BITMAPINFO **info);
 };
 

@@ -54,21 +54,22 @@ void Stage::drawStage()
 	for (int y = 0; y < 11; ++y) {
 		for (int x = 0; x < 11; ++x) {
 			for (int z = 0; z < 11; ++z) {
-				if (map[y][x][z] ==1) {
+				if (map[y][x][z] == 1) {
+					glEnable(GL_BLEND);
 					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 					glColor4f(0.0, 0.5, 1.0, 0.5);
 					glutSolidCube(10);
+					glDisable(GL_BLEND);
 				}
 				else if (map[y][x][z] == 2) {
-					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 					glColor4f(1.0, 0.5, 1.0, 0.5);
-					glutSolidCube(10);					
+					glutSolidCube(10);
 				}
 				else if (map[y][x][z] == 3) {
 					glColor4f(0.5, 0.0, 1.0, 0.5);
 					glutSolidCube(10);
 				}
-				
+
 				glTranslatef(0, 0, -10);
 			}
 			glTranslatef(10, 0, 110);
@@ -90,7 +91,6 @@ void Stage::drawStage()
 		for (int i = 0; i < (int)strlen(string); i++)
 			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, string[i]);
 	}
-
 }
 
 void Stage::updateStage(float elapsedTime)
@@ -124,6 +124,10 @@ void Stage::updateStage(float elapsedTime)
 
 void Stage::Keyboard(unsigned char key)
 {
+	if (selectCube < numCube)
+		if (cube[selectCube]->getType() == 0)
+			cube[selectCube]->Keyboard(key);
+
 	if (key == 'r') {
 		int cnt[4]{ 0 };
 
@@ -169,12 +173,18 @@ void Stage::Keyboard(unsigned char key)
 		}
 	}
 	else if (key == 't') {
+		setCubeType(0);
 
+		for (int y = 0; y < 11; ++y)
+			for (int x = 0; x < 11; ++x)
+				for (int z = 0; z < 11; ++z)
+					if (cube[selectCube]->getCube(y, x, z) == 1) {
+						if (map[y][x][z] == 2)
+							map[y][x][z] = 0;
+						else if (map[y][x][z] == 3)
+							map[y][x][z] = 1;
+					}
 	}
-
-	if (selectCube < numCube)
-		if (cube[selectCube]->getType() == 0)
-			cube[selectCube]->Keyboard(key);
 }
 
 void Stage::Stage1()

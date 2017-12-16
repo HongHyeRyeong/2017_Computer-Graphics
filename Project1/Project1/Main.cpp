@@ -46,7 +46,6 @@ void main(int argc, char *argv[])
 	glutTimerFunc(100, TimerFunction, 1);
 
 	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_BLEND); // ºí·»µù Åõ¸í
 	glEnable(GL_COLOR_MATERIAL);
 	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 	glMateriali(GL_FRONT, GL_SHININESS, 128);
@@ -129,45 +128,11 @@ void Keyboard(unsigned char key, int x, int y)
 				PlaySound(TEXT(SOUND_FILE_NAME_CUBE), NULL, SND_ASYNC);
 			}
 		}
-		else if (key == 'r')
-		{
-			stage->Keyboard(key);
-
-			// 
-
-			PlaySound(TEXT(SOUND_FILE_NAME_CUBE), NULL, SND_ASYNC);
-
-			/*
-			if (saveNum1 == selectNum)
-			{
-				stage->savecube1(1);
-				stage->setSaveCube1(saveNum1);
-			}
-			if (saveNum2 == selectNum)
-			{
-				stage->savecube2(1);
-				stage->setSaveCube2(saveNum2);
-			}
-
-			if (saveNum3 == selectNum)
-			{
-				stage->savecube3(1);
-				stage->setSaveCube3(saveNum3);
-			}*/
-
-		}
-		else if (key == 't')
-		{
-			stage->Keyboard(key);
-			//stage->setCubeType(0);
-			PlaySound(TEXT(SOUND_FILE_NAME_CUBE), NULL, SND_ASYNC);
-		}
 		else if (key == 'a' || key == 'z' || key == 's' || key == 'x' || key == 'd' || key == 'c' ||
-			key == 'f' || key == 'g' || key == 'h')
+			key == 'f' || key == 'g' || key == 'h' || key == 'r' || key == 't')
 		{
 			stage->Keyboard(key);
 			PlaySound(TEXT(SOUND_FILE_NAME_CUBE), NULL, SND_ASYNC);
-
 		}
 		else if (key == 'u') {
 			bg->setGrid(true);
