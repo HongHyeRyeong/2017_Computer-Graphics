@@ -19,9 +19,9 @@ Stage::Stage(int numStage) : numStage(numStage)
 		for (int x = 0; x < 11; ++x)
 			for (int z = 0; z < 11; ++z)
 				map[y][x][z] = 0;
-
+	
 	selectCube = 0;
-
+	
 	saveCube1 = 0;
 	saveCube2 = 1;
 	saveCube3 = 2;
@@ -47,8 +47,8 @@ void Stage::drawStage()
 	// 큐브 그리기 고정
 	if (selectCube < numCube)
 		cube[selectCube]->drawCube();
-
-	if (cube[saveCube1]->getsave1() == 1)
+	
+	if (cube[saveCube1]->getsave1() == 1) 
 	{
 		cube[saveCube1]->drawCube();
 	}
@@ -72,20 +72,20 @@ void Stage::drawStage()
 	for (int y = 0; y < 11; ++y) {
 		for (int x = 0; x < 11; ++x) {
 			for (int z = 0; z < 11; ++z) {
-				if (map[y][x][z] == 1) {
+				if (map[y][x][z] ==1) {
 					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 					glColor4f(0.0, 0.5, 1.0, 0.5);
 					glutSolidCube(10);
 				}
 
 				else if (map[y][x][z] == 2) {
-
+					
 				}
 				else if (map[y][x][z] == 3) {
 					glColor4f(0.5, 0.0, 1.0, 0.5);
 					glutSolidCube(10);
 				}
-
+				
 				glTranslatef(0, 0, -10);
 			}
 			glTranslatef(10, 0, 110);
@@ -94,7 +94,7 @@ void Stage::drawStage()
 	}
 
 
-
+	
 	glPopMatrix();
 	//
 	// 게임 시간
@@ -119,26 +119,26 @@ void Stage::updateStage(float elapsedTime)
 
 	// 충돌체크 추가 - 클리어
 	/*if (cube[saveCube1]->getsave1() == 1 && cube[saveCube1]->getCube(0,5,5) == 1 && cube[saveCube1]->getCube(0, 5, 6) == 1
-	&& cube[saveCube1]->getCube(0, 6, 5) == 1 && cube[saveCube1]->getCube(1, 5, 5) == 1)   // cube[0]
+		&& cube[saveCube1]->getCube(0, 6, 5) == 1 && cube[saveCube1]->getCube(1, 5, 5) == 1)   // cube[0]
 	{
-	if(cube[saveCube2]->getsave2() == 1 && cube[saveCube2]->getCube(0, 4, 4) == 1 && cube[saveCube2]->getCube(0, 4, 5) == 1
-	&& cube[saveCube2]->getCube(0, 4, 6) == 1 && cube[saveCube2]->getCube(0, 5, 4) == 1 && cube[saveCube2]->getCube(1, 4, 6) == 1) // cube[1]
-	{
-	if (cube[saveCube3]->getsave3() == 1 && cube[saveCube3]->getCube(0, 6, 4) == 1 && cube[saveCube3]->getCube(1, 6, 4) == 1) // cube[2]
-	PlaySound(TEXT(SOUND_FILE_NAME_CLEAR), NULL, SND_SYNC); // 일단 소리로 클리어 처리
-	}
+		if(cube[saveCube2]->getsave2() == 1 && cube[saveCube2]->getCube(0, 4, 4) == 1 && cube[saveCube2]->getCube(0, 4, 5) == 1
+			&& cube[saveCube2]->getCube(0, 4, 6) == 1 && cube[saveCube2]->getCube(0, 5, 4) == 1 && cube[saveCube2]->getCube(1, 4, 6) == 1) // cube[1]
+		{
+			if (cube[saveCube3]->getsave3() == 1 && cube[saveCube3]->getCube(0, 6, 4) == 1 && cube[saveCube3]->getCube(1, 6, 4) == 1) // cube[2]
+				PlaySound(TEXT(SOUND_FILE_NAME_CLEAR), NULL, SND_SYNC); // 일단 소리로 클리어 처리
+		}
 	}*/
 	// 고정 되어 있는 큐브 충돌체크 - 고민중
 
-	/*	for (int y = 0; y < 11; ++y) {
-	for (int x = 0; x < 11; ++x) {
-	for (int z = 0; z < 11; ++z) {
-	if (map[y][x][z] == 2) // 제한 된 틀이 아닌곳에 고정 됬을 때
-	{
+/*	for (int y = 0; y < 11; ++y) {
+		for (int x = 0; x < 11; ++x) {
+			for (int z = 0; z < 11; ++z) {
+				if (map[y][x][z] == 2) // 제한 된 틀이 아닌곳에 고정 됬을 때
+				{
 
-	}
-	}
-	}
+				}
+			}
+		}
 	}*/
 
 	//int num = cubetotalnum;
@@ -198,8 +198,8 @@ void Stage::Keyboard(unsigned char key)
 						}
 					}
 	}
-
-
+	
+	
 	if (key == 't')
 	{
 		for (int y = 0; y < 11; ++y)

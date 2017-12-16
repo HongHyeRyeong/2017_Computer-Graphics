@@ -1,5 +1,7 @@
-﻿  Cube.cpp
-c:\users\user\desktop\혜령\study\2017-2\컴퓨터그래픽스\2017_computer-graphics\project1\project1\cube.cpp(373): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.15063.0\ucrt\stdio.h(207): note: 'fopen' 선언을 참조하십시오.
-  Project1.vcxproj -> C:\Users\user\Desktop\혜령\study\2017-2\컴퓨터그래픽스\2017_Computer-Graphics\Project1\Debug\Project1.exe
-  Project1.vcxproj -> C:\Users\user\Desktop\혜령\study\2017-2\컴퓨터그래픽스\2017_Computer-Graphics\Project1\Debug\Project1.pdb (Partial PDB)
+﻿  Stage.cpp
+c:\users\lg\desktop\2017_computer-graphics-master\2017_computer-graphics-master\project1\project1\stage.cpp(42): warning C4154: 배열 식을 삭제했습니다. 포인터로 변환이 제공됩니다.
+c:\users\lg\desktop\2017_computer-graphics-master\2017_computer-graphics-master\project1\project1\stage.cpp(106): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' 선언을 참조하십시오.
+  Main.cpp
+  코드를 생성하고 있습니다...
+  Project1.vcxproj -> C:\Users\LG\Desktop\2017_Computer-Graphics-master\2017_Computer-Graphics-master\Project1\Debug\Project1.exe

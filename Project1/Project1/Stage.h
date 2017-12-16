@@ -15,7 +15,7 @@ class Stage
 {
 	int numStage, numCube;
 	int selectCube;
-	int saveCube1, saveCube2, saveCube3;
+	int saveCube1,saveCube2,saveCube3;
 	int map[11][11][11];	// 0일때 empty, 1일때 기본 제한, 2일때 틀 아닌 곳 고정, 3일때 틀 인곳 고정
 
 	int cubetotalnum;
@@ -36,7 +36,7 @@ public:
 	int getNumCube() { return numCube; }
 	void setSelectCube(int num) { selectCube = num; }
 	void setCubeType(int num) { cube[selectCube]->setType(num); }
-
+	
 	void setSaveCube1(int num) { saveCube1 = num; }
 	void setSaveCube2(int num) { saveCube2 = num; }
 	void setSaveCube3(int num) { saveCube3 = num; }
