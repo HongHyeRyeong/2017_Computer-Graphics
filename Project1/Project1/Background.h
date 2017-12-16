@@ -7,7 +7,7 @@
 
 class Background
 {
-	Planet* planet; 
+	Planet* planet;
 	bool activeGrid;
 	int skyboxSize;
 	GLuint skyboxTexture[6];

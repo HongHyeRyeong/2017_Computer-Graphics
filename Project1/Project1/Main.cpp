@@ -155,12 +155,13 @@ void Keyboard(unsigned char key, int x, int y)
 		{
 		stage->savecube3(1);
 		stage->setSaveCube3(saveNum3);
-		}
-		*/
+		}*/
+
 	}
 	else if (key == 't')
 	{
-		stage->setCubeType(0);
+		stage->Keyboard(key);
+		//stage->setCubeType(0);
 		PlaySound(TEXT(SOUND_FILE_NAME_CUBE), NULL, SND_ASYNC);
 	}
 	else if (key == 'a' || key == 'z' || key == 's' || key == 'x' || key == 'd' || key == 'c' ||

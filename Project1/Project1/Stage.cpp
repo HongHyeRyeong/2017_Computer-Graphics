@@ -79,8 +79,7 @@ void Stage::drawStage()
 				}
 
 				else if (map[y][x][z] == 2) {
-					glColor4f(0.5, 0.0, 1.0, 0.5);
-					glutSolidCube(10);
+
 				}
 				else if (map[y][x][z] == 3) {
 					glColor4f(0.5, 0.0, 1.0, 0.5);
@@ -203,7 +202,15 @@ void Stage::Keyboard(unsigned char key)
 
 	if (key == 't')
 	{
-
+		for (int y = 0; y < 11; ++y)
+			for (int x = 0; x < 11; ++x)
+				for (int z = 0; z < 11; ++z)
+					if (cube[selectCube]->getCube(y, x, z) == 1) {
+						if (map[y][x][z] == 2)
+						{
+							setCubeType(0);
+						}
+					}
 	}
 
 	if (selectCube < numCube)

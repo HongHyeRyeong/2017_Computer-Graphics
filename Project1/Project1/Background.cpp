@@ -77,10 +77,10 @@ void Background::drawBackground()
 {
 	// skybox
 	GLfloat vec[8][3]{
-		{ -skyboxSize, skyboxSize, skyboxSize }, { skyboxSize, skyboxSize, skyboxSize },
-		{ skyboxSize, skyboxSize, -skyboxSize }, { -skyboxSize, skyboxSize, -skyboxSize },
-		{ -skyboxSize, -skyboxSize, skyboxSize }, { -skyboxSize, -skyboxSize, -skyboxSize },
-		{ skyboxSize, -skyboxSize, -skyboxSize }, { skyboxSize, -skyboxSize, skyboxSize }
+		{ -skyboxSize, skyboxSize, skyboxSize },{ skyboxSize, skyboxSize, skyboxSize },
+		{ skyboxSize, skyboxSize, -skyboxSize },{ -skyboxSize, skyboxSize, -skyboxSize },
+		{ -skyboxSize, -skyboxSize, skyboxSize },{ -skyboxSize, -skyboxSize, -skyboxSize },
+		{ skyboxSize, -skyboxSize, -skyboxSize },{ skyboxSize, -skyboxSize, skyboxSize }
 	};
 
 	glColor3f(1.0, 1.0, 1.0);
@@ -200,7 +200,7 @@ void Background::drawBackground()
 
 		for (int i = 1; i < 6; ++i) {
 			glPushMatrix();
-			if(i==1)
+			if (i == 1)
 				glTranslatef(0, 110, 0);
 			else if (i == 2) {
 				glRotatef(90.0, 1.0f, 0.0f, 0.0f);
@@ -239,7 +239,7 @@ void Background::drawBackground()
 
 	// Planet
 	// 아래 주석 풀면 Planet이 그려짐
-	//planet->drawPlanet();
+	planet->drawPlanet();
 }
 
 void Background::updateBackground(float elapsedTime)
@@ -283,7 +283,7 @@ GLubyte* Background::LoadDIBitmap(const char *filename, BITMAPINFO **info)
 
 	if ((bitsize = (*info)->bmiHeader.biSizeImage) == 0)
 		bitsize = ((*info)->bmiHeader.biWidth *
-		(*info)->bmiHeader.biBitCount + 7) / 8.0 *
+			(*info)->bmiHeader.biBitCount + 7) / 8.0 *
 		abs((*info)->bmiHeader.biHeight);
 
 	if ((bits = (unsigned char *)malloc(bitsize)) == NULL) {
