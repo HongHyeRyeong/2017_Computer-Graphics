@@ -21,12 +21,14 @@ class Stage
 
 	Cube* cube[10];
 	float timeStage;
+	GLuint cubeTexture[3];
 public:
 	Stage();
 	Stage(int numStage);
 	~Stage();
 
 	void drawStage();
+	void drawCube();
 	void updateStage(float elapsedTime);
 	void Keyboard(unsigned char key);
 
@@ -36,6 +38,6 @@ public:
 	void setSelectCube(int num) { selectCube = num; }
 	void setCubeType(int num) { cube[selectCube]->setType(num); }
 
-	void CheckCube(int x, int y, int z) { cube[selectCube]->Check(y, x, z); }
+	GLubyte * LoadDIBitmap(const char *filename, BITMAPINFO **info);
 };
 
