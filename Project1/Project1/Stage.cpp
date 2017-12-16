@@ -16,6 +16,7 @@ Stage::Stage(int numStage) : numStage(numStage)
 
 	stageType = 0;
 	selectCube = 0;
+	cubetotalnum = 0;
 
 	GLubyte *pBytes;
 	BITMAPINFO *info;
@@ -62,6 +63,20 @@ Stage::Stage(int numStage) : numStage(numStage)
 
 	if (numStage == 1)
 		Stage1();
+	else if (numStage == 2)
+		Stage2();
+	else if (numStage == 3)
+		Stage3();
+	else if (numStage == 4)
+		Stage4();
+	else if (numStage == 5)
+		Stage5();
+	else if (numStage == 6)
+		Stage6();
+	else if (numStage == 7)
+		Stage7();
+	else if (numStage == 8)
+		Stage8();
 }
 
 Stage::~Stage()
@@ -120,7 +135,7 @@ void Stage::Keyboard(unsigned char key)
 
 		for (int y = 0; y < 11; ++y)
 			for (int x = 0; x < 11; ++x)
-				for (int z = 0; z < 11; ++z)
+				for (int z = 0; z < 11; ++z) {
 					if (cube[selectCube]->getCube(y, x, z) == 1) {
 						if (map[y][x][z] == 0)
 							cnt[0]++;
@@ -131,6 +146,8 @@ void Stage::Keyboard(unsigned char key)
 						else if (map[y][x][z] == 3)
 							cnt[3]++;
 					}
+				}
+	
 
 		int sum{ 0 };
 		for (int i = 0; i < 4; ++i)
@@ -176,9 +193,8 @@ void Stage::Keyboard(unsigned char key)
 
 void Stage::drawGamePlay()
 {
-
 	// 큐브 그리기 고정
-	if (selectCube < numCube)
+	if (selectCube < numCube&&stageType == 0)
 		cube[selectCube]->drawCube();
 
 	// map 그리기
@@ -212,7 +228,13 @@ void Stage::drawGamePlay()
 					drawCube();
 					glDisable(GL_TEXTURE_2D);
 				}
-
+				else if (map[y][x][z] == 4) {
+					glColor3f(0.6, 0.6, 0.6);
+					glEnable(GL_TEXTURE_2D);
+					glBindTexture(GL_TEXTURE_2D, mapTexture[0]);
+					drawCube();
+					glDisable(GL_TEXTURE_2D);
+				}
 				glTranslatef(0, 0, -10);
 			}
 			glTranslatef(10, 0, 110);
@@ -420,9 +442,219 @@ void Stage::Stage1()
 	map[1][4][6] = 1;
 
 	numCube = 3;
-	timeStage = 60;
-	cubetotalnum = 11;
+	timeStage = 60 * 5;
+	
+	for (int y = 0; y < 11; ++y)
+		for (int x = 0; x < 11; ++x)
+			for (int z = 0; z < 11; ++z)
+				if (map[y][x][z] == 1)
+					cubetotalnum++;
 
 	for (int i = 0; i < numCube; ++i)
 		cube[i] = new Cube(1, i);
+}
+
+void Stage::Stage2()
+{
+	map[0][4][5] = 1;
+	map[0][5][4] = 1;
+	map[0][5][5] = 1;
+	map[0][5][6] = 1;
+	map[0][6][4] = 1;
+	map[0][6][5] = 1;
+	map[0][6][6] = 1;
+	map[0][7][5] = 1;
+	map[1][4][5] = 1;
+	map[1][7][5] = 1;
+	map[2][2][5] = 1;
+	map[2][3][5] = 1;
+	map[2][4][5] = 1;
+	map[3][3][5] = 1;
+	map[3][4][5] = 1;
+
+	numCube = 4;
+	timeStage = 60 * 5;
+
+	for (int y = 0; y < 11; ++y)
+		for (int x = 0; x < 11; ++x)
+			for (int z = 0; z < 11; ++z)
+				if (map[y][x][z] == 1)
+					cubetotalnum++;
+
+	for (int i = 0; i < numCube; ++i)
+		cube[i] = new Cube(2, i);
+}
+
+
+void Stage::Stage3()
+{
+	map[0][4][4] = 1;
+	map[0][4][5] = 1;
+	map[1][4][5] = 1;
+	map[2][4][5] = 1;
+	map[0][5][5] = 1;
+	map[0][5][6] = 1;
+	map[0][5][6] = 1;
+	map[1][5][6] = 1;
+	map[0][4][6] = 1;
+
+	numCube = 2;
+	timeStage = 60;
+
+	for (int y = 0; y < 11; ++y)
+		for (int x = 0; x < 11; ++x)
+			for (int z = 0; z < 11; ++z)
+				if (map[y][x][z] == 1)
+					cubetotalnum++;
+
+	for (int i = 0; i < numCube; ++i)
+		cube[i] = new Cube(3, i);
+}
+
+void Stage::Stage4()
+{
+	map[0][4][5] = 1;
+	map[0][5][5] = 1;
+	map[1][4][5] = 1;
+	map[2][4][5] = 1;
+	map[0][5][4] = 1;
+	map[1][5][4] = 1;
+	map[1][5][5] = 1;
+	map[1][5][6] = 1;
+	map[0][5][6] = 1;
+	map[0][6][5] = 1;
+	map[1][6][5] = 1;
+	map[2][6][5] = 1;
+	map[2][5][5] = 1;
+
+	numCube = 3;
+	timeStage = 60;
+
+	for (int y = 0; y < 11; ++y)
+		for (int x = 0; x < 11; ++x)
+			for (int z = 0; z < 11; ++z)
+				if (map[y][x][z] == 1)
+					cubetotalnum++;
+
+	for (int i = 0; i < numCube; ++i)
+		cube[i] = new Cube(4, i);
+}
+
+
+void Stage::Stage5()
+{
+	map[0][4][3] = 1;
+	map[0][5][3] = 1;
+	map[0][6][3] = 1;
+	map[0][7][3] = 1;
+	map[0][7][4] = 1;
+	map[0][7][5] = 1;
+	map[0][7][6] = 1;
+	map[0][6][6] = 1;
+	map[0][5][6] = 1;
+	map[0][4][4] = 1;
+	map[0][4][5] = 1;
+	map[0][5][4] = 1;
+	map[0][3][4] = 1;
+	map[1][3][4] = 1;
+	map[1][4][4] = 1;
+	map[1][5][4] = 1;
+
+	numCube = 4;
+	timeStage = 120;
+
+	for (int y = 0; y < 11; ++y)
+		for (int x = 0; x < 11; ++x)
+			for (int z = 0; z < 11; ++z)
+				if (map[y][x][z] == 1)
+					cubetotalnum++;
+
+	for (int i = 0; i < numCube; ++i)
+		cube[i] = new Cube(5, i);
+}
+
+
+void Stage::Stage6()
+{
+	map[0][5][4] = 1;
+	map[1][5][4] = 1;
+	map[0][6][4] = 1;
+	map[0][6][5] = 1;
+	map[0][5][5] = 1;
+	map[0][5][6] = 1;
+	map[1][5][6] = 1;
+	map[2][5][6] = 1;
+	map[2][6][6] = 1;
+	map[0][6][6] = 1;
+	map[1][6][6] = 1;
+
+	numCube = 3;
+	timeStage = 60;
+
+	for (int y = 0; y < 11; ++y)
+		for (int x = 0; x < 11; ++x)
+			for (int z = 0; z < 11; ++z)
+				if (map[y][x][z] == 1)
+					cubetotalnum++;
+
+	for (int i = 0; i < numCube; ++i)
+		cube[i] = new Cube(6, i);
+}
+
+void Stage::Stage7()
+{
+	map[0][3][5] = 4;
+	map[0][4][4] = 1;
+	map[0][4][5] = 1;
+	map[0][5][4] = 1;
+	map[0][5][5] = 1;
+	map[0][5][6] = 1;
+	map[0][6][6] = 4;
+	map[1][5][6] = 1;
+
+	numCube = 2;
+	timeStage = 60 * 5;
+
+	for (int y = 0; y < 11; ++y)
+		for (int x = 0; x < 11; ++x)
+			for (int z = 0; z < 11; ++z)
+				if (map[y][x][z] == 1)
+					cubetotalnum++;
+
+	for (int i = 0; i < numCube; ++i)
+		cube[i] = new Cube(7, i);
+}
+
+void Stage::Stage8()
+{
+	map[0][4][4] = 4;
+	map[0][4][5] = 1;
+	map[0][4][6] = 4;
+	map[0][5][4] = 1;
+	map[0][5][5] = 4;
+	map[0][5][6] = 1;
+	map[0][6][4] = 4;
+	map[0][6][5] = 1;
+	map[0][6][6] = 4;
+	map[1][4][4] = 1;
+	map[1][4][5] = 1;
+	map[1][4][6] = 1;
+	map[1][5][4] = 1;
+	map[1][5][5] = 1;
+	map[1][5][6] = 1;
+	map[1][6][4] = 1;
+	map[1][6][5] = 1;
+	map[1][6][6] = 1;
+
+	numCube = 4;
+	timeStage = 60 * 5;
+
+	for (int y = 0; y < 11; ++y)
+		for (int x = 0; x < 11; ++x)
+			for (int z = 0; z < 11; ++z)
+				if (map[y][x][z] == 1)
+					cubetotalnum++;
+
+	for (int i = 0; i < numCube; ++i)
+		cube[i] = new Cube(8, i);
 }

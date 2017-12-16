@@ -22,11 +22,18 @@ public:
 	void moveCube(unsigned char key);
 	void rotateCube(unsigned char key);
 
-	void Stage1();
-
 	int getType() { return type; }
 	void setType(int num) { type = num; }
 	int getCube(int y, int x, int z) { return cube[y][x][z]; }
+
+	void Stage1();
+	void Stage2();
+	void Stage3();
+	void Stage4();
+	void Stage5();
+	void Stage6();
+	void Stage7();
+	void Stage8();
 	
 	GLubyte * LoadDIBitmap(const char *filename, BITMAPINFO **info);
 };

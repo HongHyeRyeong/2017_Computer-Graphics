@@ -148,8 +148,20 @@ void Keyboard(unsigned char key, int x, int y)
 		}
 		else if (key == '1')
 			stage = new Stage(1);
-		//else if (key == '2')
-		//	stage = new Stage(2);
+		else if (key == '2')
+			stage = new Stage(2);
+		else if (key == '3')
+			stage = new Stage(3);
+		else if (key == '4')
+			stage = new Stage(4);
+		else if (key == '5')
+			stage = new Stage(5);
+		else if (key == '6')
+			stage = new Stage(6);
+		else if (key == '7')
+			stage = new Stage(7);
+		else if (key == '8')
+			stage = new Stage(8);
 	}
 }
 

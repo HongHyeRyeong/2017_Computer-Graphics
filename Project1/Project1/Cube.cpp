@@ -26,6 +26,20 @@ Cube::Cube(int numStage, int numCube) : numStage(numStage), numCube(numCube)
 
 	if (numStage == 1)
 		Stage1();
+	else if (numStage == 2)
+		Stage2();
+	else if (numStage == 3)
+		Stage3();
+	else if (numStage == 4)
+		Stage4();
+	else if (numStage == 5)
+		Stage5();
+	else if (numStage == 6)
+		Stage6();
+	else if (numStage == 7)
+		Stage7();
+	else if (numStage == 8)
+		Stage8();
 }
 
 void Cube::drawCube()
@@ -353,6 +367,255 @@ void Cube::Stage1()
 		cube[1][2][3] = 1;
 	}
 	else if (numCube == 2) {
+		centerCube[0] = 0;
+		centerCube[1] = 2;
+		centerCube[2] = 2;
+
+		cube[0][2][2] = 1;
+		cube[1][2][2] = 1;
+	}
+}
+
+void Cube::Stage2()
+{
+	if (numCube == 0) {
+		centerCube[0] = 0;
+		centerCube[1] = 2;
+		centerCube[2] = 1;
+
+		cube[0][2][1] = 1;
+		cube[0][2][2] = 1;
+		cube[0][2][3] = 1;
+		cube[1][2][3] = 1;
+		cube[2][2][3] = 1;
+	}
+	else if (numCube == 1) {
+		centerCube[0] = 0;
+		centerCube[1] = 2;
+		centerCube[2] = 2;
+
+		cube[0][2][2] = 1;
+		cube[0][3][2] = 1;
+		cube[0][3][3] = 1;
+		cube[1][3][3] = 1;
+	}
+	else if (numCube == 2) {
+		centerCube[0] = 0;
+		centerCube[1] = 2;
+		centerCube[2] = 1;
+
+		cube[0][2][1] = 1;
+		cube[0][2][2] = 1;
+		cube[1][2][2] = 1;
+		cube[2][2][2] = 1;
+	}
+	else if (numCube == 3) {
+		centerCube[0] = 0;
+		centerCube[1] = 2;
+		centerCube[2] = 2;
+
+		cube[0][2][2] = 1;
+		cube[1][2][2] = 1;
+	}
+}
+
+void Cube::Stage3()
+{
+	if (numCube == 0) {
+		centerCube[0] = 0;
+		centerCube[1] = 2;
+		centerCube[2] = 2;
+
+		cube[0][2][2] = 1;
+		cube[0][2][3] = 1;
+		cube[0][3][2] = 1;
+		cube[1][2][2] = 1;
+	}
+	else if (numCube == 1) {
+		centerCube[0] = 0;
+		centerCube[1] = 2;
+		centerCube[2] = 1;
+
+		cube[0][2][1] = 1;
+		cube[0][3][1] = 1;
+		cube[1][3][1] = 1;
+		cube[2][3][1] = 1;
+	}
+}
+void Cube::Stage4()
+{
+	if (numCube == 0) {
+		centerCube[0] = 0;
+		centerCube[1] = 2;
+		centerCube[2] = 1;
+
+		cube[0][2][1] = 1;
+		cube[0][3][1] = 1;
+		cube[1][3][1] = 1;
+		cube[2][3][1] = 1;
+	}
+	else if (numCube == 1) {
+		centerCube[0] = 0;
+		centerCube[1] = 2;
+		centerCube[2] = 1;
+
+		cube[0][2][1] = 1;
+		cube[1][2][1] = 1;
+		cube[0][3][1] = 1;
+		cube[0][4][1] = 1;
+		cube[1][4][1] = 1;
+	}
+	else if (numCube == 2) {
+		centerCube[0] = 0;
+		centerCube[1] = 2;
+		centerCube[2] = 1;
+
+
+		cube[0][2][1] = 1;
+		cube[1][2][1] = 1;
+		cube[2][2][1] = 1;
+		cube[2][3][1] = 1;
+
+	}
+}
+void Cube::Stage5()
+{
+	if (numCube == 0) {
+		centerCube[0] = 0;
+		centerCube[1] = 2;
+		centerCube[2] = 1;
+
+		cube[0][2][1] = 1;
+		cube[0][3][1] = 1;
+		cube[0][4][1] = 1;
+		cube[1][4][1] = 1;
+		cube[2][4][1] = 1;
+
+	}
+	else if (numCube == 1) {
+		centerCube[0] = 0;
+		centerCube[1] = 2;
+		centerCube[2] = 1;
+
+
+		cube[0][2][1] = 1;
+		cube[0][3][1] = 1;
+		cube[1][3][1] = 1;
+		cube[2][3][1] = 1;
+
+	}
+	else if (numCube == 2) {
+		centerCube[0] = 0;
+		centerCube[1] = 2;
+		centerCube[2] = 1;
+
+
+		cube[0][2][1] = 1;
+		cube[0][3][1] = 1;
+		cube[0][4][1] = 1;
+		cube[1][3][1] = 1;
+
+	}
+	else if (numCube == 3) {
+		centerCube[0] = 0;
+		centerCube[1] = 2;
+		centerCube[2] = 1;
+
+
+		cube[0][2][1] = 1;
+		cube[1][2][1] = 1;
+		cube[2][2][1] = 1;
+	}
+
+}
+void Cube::Stage6()
+{
+	if (numCube == 0) {
+		centerCube[0] = 0;
+		centerCube[1] = 2;
+		centerCube[2] = 1;
+
+		cube[0][2][2] = 1;
+		cube[1][2][2] = 1;
+		cube[0][3][2] = 1;
+		cube[0][4][2] = 1;
+		cube[0][4][1] = 1;
+	}
+	else if (numCube == 1) {
+		centerCube[0] = 0;
+		centerCube[1] = 2;
+		centerCube[2] = 1;
+
+		cube[0][2][1] = 1;
+		cube[0][3][1] = 1;
+		cube[0][2][2] = 1;
+		cube[1][2][2] = 1;
+
+	}
+	else if (numCube == 2) {
+		centerCube[0] = 0;
+		centerCube[1] = 2;
+		centerCube[2] = 1;
+
+		cube[0][2][1] = 1;
+		cube[1][2][1] = 1;
+	}
+}
+
+void Cube::Stage7()
+{
+	if (numCube == 0) {
+		centerCube[0] = 0;
+		centerCube[1] = 2;
+		centerCube[2] = 1;
+
+		cube[0][2][1] = 1;
+		cube[0][2][2] = 1;
+		cube[1][2][2] = 1;
+		cube[2][2][2] = 1;
+	}
+	else if (numCube == 1) {
+		centerCube[0] = 0;
+		centerCube[1] = 2;
+		centerCube[2] = 2;
+
+		cube[0][2][2] = 1;
+		cube[1][2][2] = 1;
+	}
+}
+
+void Cube::Stage8()
+{
+	if (numCube == 0) {
+		centerCube[0] = 0;
+		centerCube[1] = 2;
+		centerCube[2] = 2;
+
+		cube[0][2][2] = 1;
+		cube[0][2][3] = 1;
+		cube[0][3][2] = 1;
+		cube[1][2][2] = 1;
+	}
+	else if (numCube == 1) {
+		centerCube[0] = 0;
+		centerCube[1] = 2;
+		centerCube[2] = 2;
+
+		cube[0][2][2] = 1;
+		cube[0][2][3] = 1;
+		cube[0][2][4] = 1;
+		cube[1][2][3] = 1;
+	}
+	else if (numCube == 2) {
+		centerCube[0] = 0;
+		centerCube[1] = 2;
+		centerCube[2] = 2;
+
+		cube[0][2][2] = 1;
+		cube[0][2][3] = 1;
+		cube[1][2][2] = 1;
+	}
+	else if (numCube == 3) {
 		centerCube[0] = 0;
 		centerCube[1] = 2;
 		centerCube[2] = 2;

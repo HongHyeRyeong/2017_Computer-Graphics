@@ -25,3 +25,4 @@ public:
 
 	GLubyte* LoadDIBitmap(const char *filename, BITMAPINFO **info);
 };
+

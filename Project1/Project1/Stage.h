@@ -34,12 +34,19 @@ public:
 	void updateStage(float elapsedTime);
 	void Keyboard(unsigned char key);
 
-	void Stage1();
-
 	int getNumCube() { return numCube; }
 	int getStageType() { return stageType; }
 	void setSelectCube(int num) { selectCube = num; }
 	void setCubeType(int num) { cube[selectCube]->setType(num); }
+
+	void Stage1();
+	void Stage2();
+	void Stage3();
+	void Stage4();
+	void Stage5();
+	void Stage6();
+	void Stage7();
+	void Stage8();
 
 	GLubyte * LoadDIBitmap(const char *filename, BITMAPINFO **info);
 };
