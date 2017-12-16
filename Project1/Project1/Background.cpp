@@ -75,94 +75,7 @@ Background::~Background()
 
 void Background::drawBackground()
 {
-	// skybox
-	GLfloat vec[8][3]{
-		{ -skyboxSize, skyboxSize, skyboxSize }, { skyboxSize, skyboxSize, skyboxSize },
-		{ skyboxSize, skyboxSize, -skyboxSize }, { -skyboxSize, skyboxSize, -skyboxSize },
-		{ -skyboxSize, -skyboxSize, skyboxSize }, { -skyboxSize, -skyboxSize, -skyboxSize },
-		{ skyboxSize, -skyboxSize, -skyboxSize }, { skyboxSize, -skyboxSize, skyboxSize }
-	};
-
-	glColor3f(1.0, 1.0, 1.0);
-	glEnable(GL_TEXTURE_2D);
-	// 위
-	glBindTexture(GL_TEXTURE_2D, skyboxTexture[0]);
-	glBegin(GL_QUADS);
-	glTexCoord2f(0, 0);
-	glVertex3fv(vec[2]);
-	glTexCoord2f(1, 0);
-	glVertex3fv(vec[3]);
-	glTexCoord2f(1, 1);
-	glVertex3fv(vec[0]);
-	glTexCoord2f(0, 1);
-	glVertex3fv(vec[1]);
-	glEnd();
-
-	// 아래
-	glBindTexture(GL_TEXTURE_2D, skyboxTexture[1]);
-	glBegin(GL_QUADS);
-	glTexCoord2f(0, 0);
-	glVertex3fv(vec[4]);
-	glTexCoord2f(1, 0);
-	glVertex3fv(vec[7]);
-	glTexCoord2f(1, 1);
-	glVertex3fv(vec[6]);
-	glTexCoord2f(0, 1);
-	glVertex3fv(vec[5]);
-	glEnd();
-
-	// 앞
-	glBindTexture(GL_TEXTURE_2D, skyboxTexture[2]);
-	glBegin(GL_QUADS);
-	glTexCoord2f(0, 0);
-	glVertex3fv(vec[5]);
-	glTexCoord2f(1, 0);
-	glVertex3fv(vec[6]);
-	glTexCoord2f(1, 1);
-	glVertex3fv(vec[2]);
-	glTexCoord2f(0, 1);
-	glVertex3fv(vec[3]);
-	glEnd();
-
-	// 뒤
-	glBindTexture(GL_TEXTURE_2D, skyboxTexture[3]);
-	glBegin(GL_QUADS);
-	glTexCoord2f(0, 0);
-	glVertex3fv(vec[7]);
-	glTexCoord2f(1, 0);
-	glVertex3fv(vec[4]);
-	glTexCoord2f(1, 1);
-	glVertex3fv(vec[0]);
-	glTexCoord2f(0, 1);
-	glVertex3fv(vec[1]);
-	glEnd();
-
-	// 왼
-	glBindTexture(GL_TEXTURE_2D, skyboxTexture[4]);
-	glBegin(GL_QUADS);
-	glTexCoord2f(0, 0);
-	glVertex3fv(vec[4]);
-	glTexCoord2f(1, 0);
-	glVertex3fv(vec[5]);
-	glTexCoord2f(1, 1);
-	glVertex3fv(vec[3]);
-	glTexCoord2f(0, 1);
-	glVertex3fv(vec[0]);
-	glEnd();
-
-	// 오
-	glBindTexture(GL_TEXTURE_2D, skyboxTexture[5]);
-	glBegin(GL_QUADS);
-	glTexCoord2f(0, 0);
-	glVertex3fv(vec[6]);
-	glTexCoord2f(1, 0);
-	glVertex3fv(vec[7]);
-	glTexCoord2f(1, 1);
-	glVertex3fv(vec[1]);
-	glTexCoord2f(0, 1);
-	glVertex3fv(vec[2]);
-	glEnd();
-	glDisable(GL_TEXTURE_2D);
+	drawSkybox();
 
 	// Floor
 	glPushMatrix();
@@ -245,6 +158,98 @@ void Background::drawBackground()
 void Background::updateBackground(float elapsedTime)
 {
 	planet->updatePlanet();
+}
+
+
+void Background::drawSkybox()
+{
+	GLfloat vec[8][3]{
+		{ -skyboxSize, skyboxSize, skyboxSize },{ skyboxSize, skyboxSize, skyboxSize },
+	{ skyboxSize, skyboxSize, -skyboxSize },{ -skyboxSize, skyboxSize, -skyboxSize },
+	{ -skyboxSize, -skyboxSize, skyboxSize },{ -skyboxSize, -skyboxSize, -skyboxSize },
+	{ skyboxSize, -skyboxSize, -skyboxSize },{ skyboxSize, -skyboxSize, skyboxSize }
+	};
+
+	glColor3f(1.0, 1.0, 1.0);
+	glEnable(GL_TEXTURE_2D);
+	// 위
+	glBindTexture(GL_TEXTURE_2D, skyboxTexture[0]);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0, 0);
+	glVertex3fv(vec[2]);
+	glTexCoord2f(1, 0);
+	glVertex3fv(vec[3]);
+	glTexCoord2f(1, 1);
+	glVertex3fv(vec[0]);
+	glTexCoord2f(0, 1);
+	glVertex3fv(vec[1]);
+	glEnd();
+
+	// 아래
+	glBindTexture(GL_TEXTURE_2D, skyboxTexture[1]);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0, 0);
+	glVertex3fv(vec[4]);
+	glTexCoord2f(1, 0);
+	glVertex3fv(vec[7]);
+	glTexCoord2f(1, 1);
+	glVertex3fv(vec[6]);
+	glTexCoord2f(0, 1);
+	glVertex3fv(vec[5]);
+	glEnd();
+
+	// 앞
+	glBindTexture(GL_TEXTURE_2D, skyboxTexture[2]);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0, 0);
+	glVertex3fv(vec[5]);
+	glTexCoord2f(1, 0);
+	glVertex3fv(vec[6]);
+	glTexCoord2f(1, 1);
+	glVertex3fv(vec[2]);
+	glTexCoord2f(0, 1);
+	glVertex3fv(vec[3]);
+	glEnd();
+
+	// 뒤
+	glBindTexture(GL_TEXTURE_2D, skyboxTexture[3]);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0, 0);
+	glVertex3fv(vec[7]);
+	glTexCoord2f(1, 0);
+	glVertex3fv(vec[4]);
+	glTexCoord2f(1, 1);
+	glVertex3fv(vec[0]);
+	glTexCoord2f(0, 1);
+	glVertex3fv(vec[1]);
+	glEnd();
+
+	// 왼
+	glBindTexture(GL_TEXTURE_2D, skyboxTexture[4]);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0, 0);
+	glVertex3fv(vec[4]);
+	glTexCoord2f(1, 0);
+	glVertex3fv(vec[5]);
+	glTexCoord2f(1, 1);
+	glVertex3fv(vec[3]);
+	glTexCoord2f(0, 1);
+	glVertex3fv(vec[0]);
+	glEnd();
+
+	// 오
+	glBindTexture(GL_TEXTURE_2D, skyboxTexture[5]);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0, 0);
+	glVertex3fv(vec[6]);
+	glTexCoord2f(1, 0);
+	glVertex3fv(vec[7]);
+	glTexCoord2f(1, 1);
+	glVertex3fv(vec[1]);
+	glTexCoord2f(0, 1);
+	glVertex3fv(vec[2]);
+	glEnd();
+	glDisable(GL_TEXTURE_2D);
 }
 
 GLubyte* Background::LoadDIBitmap(const char *filename, BITMAPINFO **info)

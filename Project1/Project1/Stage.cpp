@@ -26,7 +26,6 @@ Stage::Stage(int numStage) : numStage(numStage)
 	saveCube2 = 1;
 	saveCube3 = 2;
 
-
 	if (numStage == 1) {
 		numCube = 3;
 		timeStage = 60 * 5;	// 5분
@@ -45,25 +44,8 @@ Stage::~Stage()
 void Stage::drawStage()
 {
 	// 큐브 그리기 고정
-	if (selectCube < numCube)
+	if (selectCube < numCube&&cube[selectCube]->getType() == 0)
 		cube[selectCube]->drawCube();
-	
-	if (cube[saveCube1]->getsave1() == 1) 
-	{
-		cube[saveCube1]->drawCube();
-	}
-	if (cube[saveCube2]->getsave2() == 1)
-	{
-		cube[saveCube2]->drawCube();
-	}
-	if (cube[saveCube3]->getsave3() == 1)
-	{
-		cube[saveCube3]->drawCube();
-	}
-
-
-
-
 
 	// map 그리기
 	glPushMatrix();
@@ -77,9 +59,10 @@ void Stage::drawStage()
 					glColor4f(0.0, 0.5, 1.0, 0.5);
 					glutSolidCube(10);
 				}
-
 				else if (map[y][x][z] == 2) {
-					
+					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+					glColor4f(1.0, 0.5, 1.0, 0.5);
+					glutSolidCube(10);					
 				}
 				else if (map[y][x][z] == 3) {
 					glColor4f(0.5, 0.0, 1.0, 0.5);
@@ -92,11 +75,8 @@ void Stage::drawStage()
 		}
 		glTranslatef(-110, 10, 0);
 	}
-
-
-	
 	glPopMatrix();
-	//
+
 	// 게임 시간
 	if (timeStage >= 0) {
 		glLoadIdentity();
@@ -115,53 +95,24 @@ void Stage::drawStage()
 
 void Stage::updateStage(float elapsedTime)
 {
-
-
-	// 충돌체크 추가 - 클리어
-	/*if (cube[saveCube1]->getsave1() == 1 && cube[saveCube1]->getCube(0,5,5) == 1 && cube[saveCube1]->getCube(0, 5, 6) == 1
-		&& cube[saveCube1]->getCube(0, 6, 5) == 1 && cube[saveCube1]->getCube(1, 5, 5) == 1)   // cube[0]
-	{
-		if(cube[saveCube2]->getsave2() == 1 && cube[saveCube2]->getCube(0, 4, 4) == 1 && cube[saveCube2]->getCube(0, 4, 5) == 1
-			&& cube[saveCube2]->getCube(0, 4, 6) == 1 && cube[saveCube2]->getCube(0, 5, 4) == 1 && cube[saveCube2]->getCube(1, 4, 6) == 1) // cube[1]
-		{
-			if (cube[saveCube3]->getsave3() == 1 && cube[saveCube3]->getCube(0, 6, 4) == 1 && cube[saveCube3]->getCube(1, 6, 4) == 1) // cube[2]
-				PlaySound(TEXT(SOUND_FILE_NAME_CLEAR), NULL, SND_SYNC); // 일단 소리로 클리어 처리
-		}
-	}*/
-	// 고정 되어 있는 큐브 충돌체크 - 고민중
-
-/*	for (int y = 0; y < 11; ++y) {
+	int num = cubetotalnum;
+	for (int y = 0; y < 11; ++y) {
 		for (int x = 0; x < 11; ++x) {
 			for (int z = 0; z < 11; ++z) {
-				if (map[y][x][z] == 2) // 제한 된 틀이 아닌곳에 고정 됬을 때
-				{
 
+				if (map[y][x][z] == 3) // 제한 된 틀에 큐브가 있을 때
+				{
+					//PlaySound(TEXT(SOUND_FILE_NAME_CLEAR), NULL, SND_SYNC); // 일단 소리로 클리어 처리
+					num--;
 				}
 			}
+	
 		}
-	}*/
-
-	//int num = cubetotalnum;
-	//for (int y = 0; y < 11; ++y) {
-	//	for (int x = 0; x < 11; ++x) {
-	//		for (int z = 0; z < 11; ++z) {
-
-	//			if (map[y][x][z] == 3) // 제한 된 틀에 큐브가 있을 때
-	//			{
-	//				PlaySound(TEXT(SOUND_FILE_NAME_CLEAR), NULL, SND_SYNC); // 일단 소리로 클리어 처리
-	//				num--;
-	//			}
-	//		}
-	//
-	//	}
-	//}
-	//if (num == 0 )
-	//{
-	//	std::cout << " ok ";
-	//}
-
-
-
+	}
+	if (num == 0 )
+	{
+		std::cout << " ok ";
+	}
 
 	// 게임 시간
 	if (timeStage <= 0) {
@@ -174,43 +125,51 @@ void Stage::updateStage(float elapsedTime)
 void Stage::Keyboard(unsigned char key)
 {
 	if (key == 'r') {
+		int cnt[4]{ 0 };
 
 		for (int y = 0; y < 11; ++y)
 			for (int x = 0; x < 11; ++x)
 				for (int z = 0; z < 11; ++z)
 					if (cube[selectCube]->getCube(y, x, z) == 1) {
-						if (map[y][x][z] == 0) {
-
-							setCubeType(1);
-							map[y][x][z] = 2;
-
-						}
-						else if (map[y][x][z] == 1) {
-							setCubeType(1);
-							map[y][x][z] = 3;
-						}
-						else if (map[y][x][z] == 2) {	// 안되게 - 틀 아닌 곳 고정
-
-						}
-						else if (map[y][x][z] == 3) {	// 안되게 - 틀 인곳 고정
-
-
-						}
+						if (map[y][x][z] == 0)
+							cnt[0]++;
+						else if (map[y][x][z] == 1)
+							cnt[1]++;
+						else if (map[y][x][z] == 2)
+							cnt[2]++;
+						else if (map[y][x][z] == 3)
+							cnt[3]++;
 					}
+
+		int sum{ 0 };
+		for (int i = 0; i < 4; ++i)
+			sum += cnt[i];
+
+		if (sum == cnt[0]) {
+			setCubeType(1);
+
+			for (int y = 0; y < 11; ++y)
+				for (int x = 0; x < 11; ++x)
+					for (int z = 0; z < 11; ++z)
+						if (cube[selectCube]->getCube(y, x, z) == 1) {
+							if (map[y][x][z] == 0)
+								map[y][x][z] = 2;
+						}
+		}
+		else if (sum == cnt[1]) {
+			setCubeType(1);
+
+			for (int y = 0; y < 11; ++y)
+				for (int x = 0; x < 11; ++x)
+					for (int z = 0; z < 11; ++z)
+						if (cube[selectCube]->getCube(y, x, z) == 1) {
+							if (map[y][x][z] == 1)
+								map[y][x][z] = 3;
+						}
+		}
 	}
-	
-	
-	if (key == 't')
-	{
-		for (int y = 0; y < 11; ++y)
-			for (int x = 0; x < 11; ++x)
-				for (int z = 0; z < 11; ++z)
-					if (cube[selectCube]->getCube(y, x, z) == 1) {
-						if (map[y][x][z] == 2)
-						{
-							setCubeType(0);
-						}
-					}
+	else if (key == 't') {
+
 	}
 
 	if (selectCube < numCube)
@@ -220,7 +179,6 @@ void Stage::Keyboard(unsigned char key)
 
 void Stage::Stage1()
 {
-
 	map[1][5][5] = 1;
 	map[0][5][5] = 1;
 	map[0][5][6] = 1;
@@ -234,7 +192,6 @@ void Stage::Stage1()
 	map[1][4][6] = 1;
 
 	cubetotalnum = 11;
-
 
 	for (int i = 0; i < numCube; ++i)
 		cube[i] = new Cube(1, i);

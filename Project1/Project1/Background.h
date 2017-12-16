@@ -16,6 +16,7 @@ public:
 	~Background();
 
 	void drawBackground();
+	void drawSkybox();
 	void updateBackground(float elapsedTime);
 
 	void setGrid(bool b) { activeGrid = b; }

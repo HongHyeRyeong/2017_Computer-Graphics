@@ -10,7 +10,6 @@
 #define SOUND_FILE_NAME_CUBE   "./sound/cube.wav "
 #define SOUND_FILE_NAME_CLEAR   "./sound/clear.wav"
 
-
 class Stage
 {
 	int numStage, numCube;
@@ -46,7 +45,5 @@ public:
 	void savecube3(int num) { cube[saveCube3]->saveType3(num); }
 
 	void CheckCube(int x, int y, int z) { cube[selectCube]->Check(y, x, z); }
-
-
 };
 
