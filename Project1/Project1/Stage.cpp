@@ -18,9 +18,13 @@ Stage::Stage(int numStage) : numStage(numStage)
 	selectCube = 0;
 	cubetotalnum = 0;
 
+	clearUp = 0;
+	clearY = 0;
+
 	GLubyte *pBytes;
 	BITMAPINFO *info;
 
+	glDisable(GL_LIGHTING);
 	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, GL_MODULATE);
 	glEnable(GL_TEXTURE_2D);
 	glGenTextures(4, mapTexture);
@@ -35,7 +39,7 @@ Stage::Stage(int numStage) : numStage(numStage)
 	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, GL_MODULATE);
 
 	glBindTexture(GL_TEXTURE_2D, mapTexture[1]);
-	pBytes = LoadDIBitmap("./Resource/map2.bmp", &info);
+	pBytes = LoadDIBitmap("./Resource/map3.bmp", &info);
 	glTexImage2D(GL_TEXTURE_2D, 0, 3, 118, 118, 0, GL_BGR_EXT, GL_UNSIGNED_BYTE, pBytes);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -122,6 +126,22 @@ void Stage::updateStage(float elapsedTime)
 		else
 			timeStage -= elapsedTime / 1000;
 	}
+	else if (stageType == 2) {
+		if (clearY == 0) {
+			if (clearUp >= 30)
+				clearY = -1;
+			else
+				clearUp += 2;
+		}
+		else {
+			if (clearUp >= 30)
+				clearY = -1;
+			else if (clearUp <= 20)
+				clearY = 1;
+
+			clearUp += clearY;
+		}
+	}
 }
 
 void Stage::Keyboard(unsigned char key)
@@ -131,7 +151,7 @@ void Stage::Keyboard(unsigned char key)
 			cube[selectCube]->Keyboard(key);
 
 	if (key == 'r') {
-		int cnt[4]{ 0 };
+		int cnt[5]{ 0 };
 
 		for (int y = 0; y < 11; ++y)
 			for (int x = 0; x < 11; ++x)
@@ -145,12 +165,14 @@ void Stage::Keyboard(unsigned char key)
 							cnt[2]++;
 						else if (map[y][x][z] == 3)
 							cnt[3]++;
+						else if (map[y][x][z] == 4)
+							cnt[4]++;
 					}
 				}
 	
 
 		int sum{ 0 };
-		for (int i = 0; i < 4; ++i)
+		for (int i = 0; i < 5; ++i)
 			sum += cnt[i];
 
 		if (sum == cnt[0]) {
@@ -199,7 +221,7 @@ void Stage::drawGamePlay()
 
 	// map ±×¸®±â
 	glPushMatrix();
-	glTranslatef(-50, 5, 50);
+	glTranslatef(-50, 5 + clearUp, 50);
 
 	for (int y = 0; y < 11; ++y) {
 		for (int x = 0; x < 11; ++x) {
@@ -253,9 +275,9 @@ void Stage::drawGamePlay()
 		std::sprintf(string, "%d min %d second", timeM, timeS);
 
 		glColor3f(1.0, 1.0, 1.0);
-		glRasterPos2f(-125, 135);
+		glRasterPos2f(-110, 120);
 		for (int i = 0; i < (int)strlen(string); i++)
-			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, string[i]);
+			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, string[i]);
 	}
 }
 

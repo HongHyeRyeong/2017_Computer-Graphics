@@ -73,7 +73,7 @@ GLvoid drawScene(GLvoid)
 			GLfloat AmbientLight[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
 			GLfloat DiffuseLight[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
 			GLfloat SpecularLight[4] = { 1.0, 1.0, 1.0, 1.0 };
-			GLfloat lightPos[4] = { 0.0, 100.0, 0.0, 1.0 };
+			GLfloat lightPos[4] = { 0.0, 90.0, 0.0, 1.0 };
 			GLfloat spotDir[3] = { 0.0, -1.0, 0.0 };
 
 			glEnable(GL_LIGHTING);
@@ -118,7 +118,7 @@ void Keyboard(unsigned char key, int x, int y)
 				menu = new Menu();
 				rotX = 30;
 				rotY = 0;
-				glEnable(GL_LIGHTING);
+				glDisable(GL_LIGHTING);
 			}
 		}
 		else if (key == 'w') {
@@ -214,7 +214,7 @@ GLvoid Reshape(int w, int h)
 	glLoadIdentity();
 
 	gluPerspective(60.0f, w / h, 1.0, 4000.0);
-	glTranslatef(0.0, -20.0, -230.0);
+	glTranslatef(0.0, -20.0, -210.0);
 
 	glMatrixMode(GL_MODELVIEW);
 	gluLookAt(0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0);

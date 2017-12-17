@@ -1,11 +1,7 @@
 ﻿  Stage.cpp
-c:\users\user\desktop\매\2017_computer-graphics\project1\project1\stage.cpp(87): warning C4154: 배열 식을 삭제했습니다. 포인터로 변환이 제공됩니다.
-c:\users\user\desktop\매\2017_computer-graphics\project1\project1\stage.cpp(253): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\user\desktop\매\2017_computer-graphics\project1\project1\stage.cpp(91): warning C4154: 배열 식을 삭제했습니다. 포인터로 변환이 제공됩니다.
+c:\users\user\desktop\매\2017_computer-graphics\project1\project1\stage.cpp(275): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\stdio.h(1772): note: 'sprintf' 선언을 참조하십시오.
-c:\users\user\desktop\매\2017_computer-graphics\project1\project1\stage.cpp(383): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\user\desktop\매\2017_computer-graphics\project1\project1\stage.cpp(405): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\stdio.h(207): note: 'fopen' 선언을 참조하십시오.
-  Cube.cpp
-c:\users\user\desktop\매\2017_computer-graphics\project1\project1\cube.cpp(635): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\stdio.h(207): note: 'fopen' 선언을 참조하십시오.
-  코드를 생성하고 있습니다...
   Project1.vcxproj -> C:\Users\user\Desktop\매\2017_Computer-Graphics\Project1\Debug\Project1.exe

@@ -21,6 +21,9 @@ class Stage
 	Cube* cube[10];
 	float timeStage;
 	GLuint mapTexture[4];
+
+	float clearUp;
+	int clearY;
 public:
 	Stage();
 	Stage(int numStage);
