@@ -146,22 +146,38 @@ void Keyboard(unsigned char key, int x, int y)
 			bg->setGrid(grid);
 			PlaySound(TEXT(SOUND_FILE_NAME_CUBE), NULL, SND_ASYNC);
 		}
-		else if (key == '1')
+		else if (key == '1') {
+			selectNum = 0;
 			stage = new Stage(1);
-		else if (key == '2')
+		}
+		else if (key == '2') {
+			selectNum = 0;
 			stage = new Stage(2);
-		else if (key == '3')
+		}
+		else if (key == '3') {
+			selectNum = 0;
 			stage = new Stage(3);
-		else if (key == '4')
+		}
+		else if (key == '4') {
+			selectNum = 0;
 			stage = new Stage(4);
-		else if (key == '5')
+		}
+		else if (key == '5') {
+			selectNum = 0;
 			stage = new Stage(5);
-		else if (key == '6')
+		}
+		else if (key == '6') {
+			selectNum = 0;
 			stage = new Stage(6);
-		else if (key == '7')
+		}
+		else if (key == '7') {
+			selectNum = 0;
 			stage = new Stage(7);
-		else if (key == '8')
+		}
+		else if (key == '8') {
+			selectNum = 0;
 			stage = new Stage(8);
+		}
 	}
 }
 

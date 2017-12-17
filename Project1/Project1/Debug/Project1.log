@@ -1,10 +1,1 @@
-﻿  Stage.cpp
-c:\users\user\desktop\매\2017_computer-graphics\project1\project1\stage.cpp(29): warning C4101: 'mciPlay' :참조되지 않은 지역 변수입니다.
-c:\users\user\desktop\매\2017_computer-graphics\project1\project1\stage.cpp(25): warning C4101: 'm_mciOpenParms' :참조되지 않은 지역 변수입니다.
-c:\users\user\desktop\매\2017_computer-graphics\project1\project1\stage.cpp(27): warning C4101: 'm_dwDeviceID' :참조되지 않은 지역 변수입니다.
-c:\users\user\desktop\매\2017_computer-graphics\project1\project1\stage.cpp(107): warning C4154: 배열 식을 삭제했습니다. 포인터로 변환이 제공됩니다.
-c:\users\user\desktop\매\2017_computer-graphics\project1\project1\stage.cpp(291): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\stdio.h(1772): note: 'sprintf' 선언을 참조하십시오.
-c:\users\user\desktop\매\2017_computer-graphics\project1\project1\stage.cpp(421): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\stdio.h(207): note: 'fopen' 선언을 참조하십시오.
-  Project1.vcxproj -> C:\Users\user\Desktop\매\2017_Computer-Graphics\Project1\Debug\Project1.exe
+﻿  Project1.vcxproj -> C:\Users\user\Desktop\매\2017_Computer-Graphics\Project1\Debug\Project1.exe
