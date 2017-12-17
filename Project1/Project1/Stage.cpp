@@ -21,6 +21,22 @@ Stage::Stage(int numStage) : numStage(numStage)
 	clearUp = 0;
 	clearY = 0;
 
+	// bgm
+	MCI_OPEN_PARMS m_mciOpenParms;
+	MCI_PLAY_PARMS m_mciPlayParms;
+	DWORD m_dwDeviceID;
+	MCI_OPEN_PARMS mciOpen;
+	MCI_PLAY_PARMS mciPlay;
+
+	mciOpen.lpstrElementName = "./sound/bgm.wav";
+	mciOpen.lpstrDeviceType = "waveaudio";
+	mciSendCommand(0, MCI_OPEN, MCI_OPEN_ELEMENT | MCI_OPEN_TYPE | MCI_OPEN_TYPE, (DWORD)(LPVOID)&mciOpen);
+
+	int dwID = mciOpen.wDeviceID;
+
+	mciSendCommand(dwID, MCI_PLAY, MCI_DGV_PLAY_REPEAT, (DWORD)(LPVOID)&m_mciPlayParms);
+
+	// texture
 	GLubyte *pBytes;
 	BITMAPINFO *info;
 
@@ -464,7 +480,7 @@ void Stage::Stage1()
 	map[1][4][6] = 1;
 
 	numCube = 3;
-	timeStage = 60 * 5;
+	timeStage = 60 * 3;
 	
 	for (int y = 0; y < 11; ++y)
 		for (int x = 0; x < 11; ++x)
@@ -495,7 +511,7 @@ void Stage::Stage2()
 	map[3][4][5] = 1;
 
 	numCube = 4;
-	timeStage = 60 * 5;
+	timeStage = 60 * 3;
 
 	for (int y = 0; y < 11; ++y)
 		for (int x = 0; x < 11; ++x)
@@ -521,7 +537,7 @@ void Stage::Stage3()
 	map[0][4][6] = 1;
 
 	numCube = 2;
-	timeStage = 60;
+	timeStage = 60 * 4;
 
 	for (int y = 0; y < 11; ++y)
 		for (int x = 0; x < 11; ++x)
@@ -550,7 +566,7 @@ void Stage::Stage4()
 	map[2][5][5] = 1;
 
 	numCube = 3;
-	timeStage = 60;
+	timeStage = 60 * 4;
 
 	for (int y = 0; y < 11; ++y)
 		for (int x = 0; x < 11; ++x)
@@ -583,7 +599,7 @@ void Stage::Stage5()
 	map[1][5][4] = 1;
 
 	numCube = 4;
-	timeStage = 120;
+	timeStage = 60 * 5;
 
 	for (int y = 0; y < 11; ++y)
 		for (int x = 0; x < 11; ++x)
@@ -611,7 +627,7 @@ void Stage::Stage6()
 	map[1][6][6] = 1;
 
 	numCube = 3;
-	timeStage = 60;
+	timeStage = 60 * 5;
 
 	for (int y = 0; y < 11; ++y)
 		for (int x = 0; x < 11; ++x)

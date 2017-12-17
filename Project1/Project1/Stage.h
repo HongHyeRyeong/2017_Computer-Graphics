@@ -1,13 +1,14 @@
 #pragma once
-#pragma comment(lib,"winmm")
+#pragma comment(lib, "winmm.lib")
 
 #include <GL/glut.h>
 #include <iostream>
 #include "Cube.h"
-#include<mmsystem.h>
+#include "Mmsystem.h"
+#include "Digitalv.h"
 
-#define SOUND_FILE_NAME_BGM    "    "
-#define SOUND_FILE_NAME_CUBE   "./sound/cube.wav "
+#define SOUND_FILE_NAME_BGM    "./sound/bgm.wav"
+#define SOUND_FILE_NAME_CUBE   "./sound/cube.wav"
 #define SOUND_FILE_NAME_CLEAR   "./sound/clear.wav"
 #define SOUND_FILE_NAME_GAME_OVER   "./sound/gameover.wav"
 
@@ -24,6 +25,8 @@ class Stage
 
 	float clearUp;
 	int clearY;
+
+	bool bgmStart;
 public:
 	Stage();
 	Stage(int numStage);
